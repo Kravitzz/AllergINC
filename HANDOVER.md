@@ -2,7 +2,7 @@
 
 **Última sesión:** 2026-06-04
 **Branch:** main
-**Último commit:** `0bf0364 docs: guia de instalacion de herramientas por fases (Node, Expo, Cloudflare, MCP)`
+**Último commit:** `ed8f6ff docs: README refleja las dos pantallas aprobadas (principal y Perfil)`
 
 ---
 
@@ -20,8 +20,9 @@ está publicado en GitHub (`Kravitzz/AllergINC`). Sin código de aplicación tod
   propio en el placeholder de "Otros alérgenos".
 - Barra inferior ampliada de 4 a 5 botones (se añade Calendario); escaneo centrado
   y elevado con icono `ti-scan`.
-- Documentación sincronizada: CLAUDE.md, spec de diseño, ESTADO-PROYECTO.md y el
-  patrón fijo del comando `/pantalla`.
+- Documentación sincronizada: CLAUDE.md, spec de diseño, ESTADO-PROYECTO.md, el
+  patrón fijo del comando `/pantalla` y el README.
+- Commits subidos a GitHub: `ea717b1` (Perfil + docs) y `ed8f6ff` (README).
 
 ## Pantallas / módulos en estado
 - Pantalla principal — diseñada (maqueta aprobada).
