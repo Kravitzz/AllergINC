@@ -1,4 +1,4 @@
-# HANDOVER — App de alérgenos
+# HANDOVER — AllergINC
 
 **Última sesión:** 2026-06-03
 **Branch:** main
@@ -45,7 +45,7 @@ maqueta y sistema de skills/hooks listo. Sin código de aplicación todavía.
 
 ## Próximo paso concreto
 
-**Diseñar la pantalla de Perfil (subsistema A) usando la skill `nueva-pantalla`.**
+**Diseñar la pantalla de Perfil (subsistema A) con el comando `/pantalla Perfil`.**
 
 1. Definir qué datos registra el usuario (alérgenos, intolerancias, gravedad).
 2. Decidir dónde encajan los recordatorios de medicación (B).
@@ -58,4 +58,4 @@ maqueta y sistema de skills/hooks listo. Sin código de aplicación todavía.
 
 ## Comando para reanudar
 
-Ejecuta la skill `session-bootstrap`.
+Ejecuta /inicio.

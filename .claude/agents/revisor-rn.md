@@ -1,5 +1,5 @@
 ---
-name: revisor-react-native
+name: revisor-rn
 description: Revisa componentes React Native recién creados o modificados buscando problemas de rendimiento, accesibilidad y errores comunes. Usar tras crear o editar cualquier componente .tsx/.jsx de la app.
 tools: Read, Grep, Glob
 model: haiku

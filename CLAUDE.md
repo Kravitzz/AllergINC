@@ -65,16 +65,15 @@ Usamos el plugin **Superpowers**: brainstorming → spec → plan de implementac
 ejecución con pruebas. Estamos en fase de diseño (brainstorming). Aún NO se ha
 escrito código de la app ni el plan de implementación.
 
-## Sistema de sesión (skills y hooks)
+## Sistema de sesión (comandos y hooks)
 
-Al **empezar** a trabajar: ejecuta la skill `session-bootstrap` (lee HANDOVER +
-CLAUDE + git y reporta dónde estamos). Al **terminar**: ejecuta `session-end`
-(reescribe `HANDOVER.md` y propone commit).
+Al **empezar** a trabajar: ejecuta `/inicio` (lee HANDOVER + CLAUDE + git y reporta
+dónde estamos). Al **terminar**: ejecuta `/cierre` (reescribe `HANDOVER.md` y
+propone commit).
 
-- `HANDOVER.md` = estado vivo. Es el primer archivo que se lee cada sesión.
-- Skills en `.claude/skills/`: `session-bootstrap`, `session-end`,
-  `nueva-pantalla`, `revisor-alergenos`.
-- Agente en `.claude/agents/`: `revisor-react-native`.
+- `HANDOVER.md` = estado vivo. Primer archivo que se lee cada sesión.
+- Comandos en `.claude/commands/`: `/inicio`, `/cierre`, `/pantalla`, `/revisa`.
+- Agente en `.claude/agents/`: `revisor-rn`.
 - Hooks en `.claude/scripts/` (avisan al arrancar y vigilan el contexto).
 
 ## Dónde está cada cosa

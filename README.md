@@ -1,4 +1,4 @@
-# App de alérgenos (nombre provisional)
+# AllergINC (nombre provisional)
 
 App móvil (Android + iOS) que avisa a personas con alergias e intolerancias
 alimentarias de la presencia de sus alérgenos en menús de restaurantes.
@@ -24,7 +24,10 @@ historial completo.
 │   ├── ESTADO-PROYECTO.md     Estado y decisiones
 │   └── superpowers/specs/     Especificaciones de diseño
 ├── disenos/                   Maquetas HTML
-└── .claude/skills/            Skills del proyecto (a futuro)
+└── .claude/
+    ├── commands/              Comandos: /inicio /cierre /pantalla /revisa
+    ├── agents/                Agente: revisor-rn
+    └── scripts/               Hooks de sesión
 ```
 
 ## Pila tecnológica (tentativa)
