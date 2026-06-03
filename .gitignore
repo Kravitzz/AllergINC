@@ -19,3 +19,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Contador de prompts (no versionar)
+.claude/.prompt_counter
