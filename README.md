@@ -5,7 +5,9 @@ alimentarias de la presencia de sus alérgenos en menús de restaurantes.
 
 ## Estado
 
-Fase de diseño. Sin código de aplicación todavía. Ver `docs/ESTADO-PROYECTO.md`.
+Fase de diseño. Sin código de aplicación todavía. Dos pantallas aprobadas
+(principal y Perfil); sus maquetas están en `disenos/`. Ver
+`docs/ESTADO-PROYECTO.md` para el detalle.
 
 ## Cómo retomar el trabajo con Claude sin gastar tokens de más
 
