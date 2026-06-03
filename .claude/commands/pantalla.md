@@ -13,8 +13,8 @@ Antes de empezar:
 2. Lee la maqueta más cercana en `disenos/` para reutilizar patrones.
 
 Patrones fijos (no cambiar sin avisar):
-- Barra inferior de 4 botones: Explorar (lupa) · Perfil (persona) · Escanear
-  (centro, resaltado) · Ajustes (rueda).
+- Barra inferior de 5 botones: Explorar (lupa) · Perfil (persona) · Escanear
+  (centro, elevado) · Calendario · Ajustes (rueda).
 - Código de color por compatibilidad con el perfil: verde = apto, ámbar =
   precaución, rojo = contiene alérgeno del usuario.
 - Aviso de seguridad: toda pantalla con veredicto "apto" recuerda verificar con el

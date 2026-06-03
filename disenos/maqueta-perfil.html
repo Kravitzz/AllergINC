@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maqueta · Perfil</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#f4f3ee; --card:#ffffff; --surface:#f1efe8;
+    --text:#1f1f1d; --muted:#5f5e5a; --hint:#8a8980;
+    --line:rgba(0,0,0,0.12);
+    --info:#185fa5;
+    /* escala de gravedad (sin verde: verde queda reservado a "apto") */
+    --grave:#a32d2d; --grave-bg:#fdf0f0; --grave-border:#e8b4b4;
+    --medio:#bf5a1a; --medio-bg:#fdf1e6; --medio-border:#edc3a0;
+    --leve:#c79a00;  --leve-bg:#fdf6da;  --leve-border:#ecd584;
+    --leve-dot:#f0c000; /* amarillo claro para la leyenda */
+  }
+  *{box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
+  body{background:var(--bg); display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:20px;}
+  .phone{width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; height:880px;}
+  .statusbar{display:flex; justify-content:space-between; font-size:12px; color:var(--hint); padding:12px 18px 0; flex-shrink:0;}
+
+  /* Conmutador superior: Perfil / Noticias */
+  .tabs{display:flex; gap:8px; padding:14px 18px 4px; flex-shrink:0;}
+  .tab{flex:1; text-align:center; padding:10px 0; border-radius:999px; font-size:14px; font-weight:600; border:1.5px solid var(--line); color:var(--muted); cursor:pointer;}
+  .tab.active{background:var(--info); border-color:var(--info); color:#fff;}
+
+  /* Cabecera */
+  .header{padding:14px 18px 10px; display:flex; align-items:center; gap:14px; flex-shrink:0;}
+  .avatar{width:50px; height:50px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; color:#fff; font-size:22px; flex-shrink:0;}
+  .header-text .name{font-size:18px; font-weight:600; color:var(--text);}
+  .header-text .sub{font-size:13px; color:var(--muted); margin-top:2px;}
+
+  .scroll{flex:1; overflow-y:auto; display:flex; flex-direction:column;}
+
+  .section{padding:0 18px 16px;}
+  .section-title{font-size:12px; font-weight:600; color:var(--hint); text-transform:uppercase; letter-spacing:.6px; margin-bottom:4px;}
+  .section-sub{font-size:11px; color:var(--hint); margin-bottom:10px;}
+
+  /* Leyenda de gravedad */
+  .legend-row{display:flex; flex-wrap:wrap; gap:10px 16px; margin:6px 0 12px; font-size:12px; color:var(--muted);}
+  .legend-row .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+  .dot-grave{background:var(--grave);} .dot-medio{background:var(--medio);}
+  .dot-leve{background:var(--leve-dot);} .dot-no{background:var(--hint);}
+
+  /* Cuadrícula de alérgenos (14 oficiales + botón añadir) */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+  .allergen{display:flex; flex-direction:column; align-items:center; gap:5px; padding:10px 4px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background:var(--surface);}
+  .allergen i{font-size:22px; color:var(--hint);}
+  .allergen span{font-size:10px; color:var(--muted); text-align:center; line-height:1.3;}
+  .allergen.grave{background:var(--grave-bg); border-color:var(--grave-border);}
+  .allergen.grave i, .allergen.grave span{color:var(--grave);}
+  .allergen.medio{background:var(--medio-bg); border-color:var(--medio-border);}
+  .allergen.medio i, .allergen.medio span{color:var(--medio);}
+  .allergen.leve{background:var(--leve-bg); border-color:var(--leve-border);}
+  .allergen.leve i, .allergen.leve span{color:var(--leve);}
+  .allergen.on span{font-weight:500;}
+  .allergen.add{background:var(--card); border:1.5px dashed var(--info);}
+  .allergen.add i, .allergen.add span{color:var(--info);}
+
+  .divider{height:1px; background:var(--line); margin:0 18px 16px;}
+
+  /* Filas tipo lista (compartidas por "Otros alérgenos" y "Recordatorios") */
+  .list-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line);}
+  .list-icon{width:38px; height:38px; border-radius:8px; background:var(--surface); display:flex; align-items:center; justify-content:center; color:var(--info); font-size:20px; flex-shrink:0;}
+  .list-info{flex:1;}
+  .list-info .main{font-size:14px; font-weight:500; color:var(--text);}
+  .list-info .meta{font-size:12px; color:var(--muted); margin-top:2px;}
+  .list-info .meta em{font-style:italic;}
+  .list-end{color:var(--hint); font-size:20px; cursor:pointer;}
+  /* badge de gravedad a la derecha */
+  .sev{font-size:12px; font-weight:600; display:flex; align-items:center; gap:5px; white-space:nowrap;}
+  .sev .dot{width:9px; height:9px; border-radius:50%;}
+  .sev.medio{color:var(--medio);} .sev.medio .dot{background:var(--medio);}
+  /* fila vacía (espacio para el siguiente) */
+  .list-row.empty .list-icon{background:transparent; border:1.5px dashed var(--info); color:var(--info); cursor:pointer;}
+  .list-row.empty .main{color:var(--hint); font-weight:400;}
+  .list-row.last{border-bottom:none;}
+
+  .add-btn{display:flex; align-items:center; gap:8px; margin-top:12px; padding:10px 14px; border-radius:10px; border:1.5px dashed var(--line); color:var(--info); font-size:14px; cursor:pointer;}
+  .add-btn i{font-size:18px;}
+
+  /* Recordatorios pegados al fondo */
+  .reminders{margin-top:auto;}
+
+  /* Barra de navegación: 5 ítems, escaneo centrado y elevado */
+  .nav{display:flex; border-top:1px solid var(--line); flex-shrink:0; padding:8px 4px 14px;}
+  .navitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;}
+  .navitem i{font-size:24px; color:var(--muted);}
+  .navitem span{font-size:10.5px; color:var(--muted);}
+  .navitem.active i, .navitem.active span{color:var(--info); font-weight:600;}
+  .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.18);}
+  .navitem .scanbox i{color:#fff; font-size:26px;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <span><i class="ti ti-wifi"></i> <i class="ti ti-battery-3"></i></span>
+  </div>
+
+  <!-- Conmutador superior -->
+  <div class="tabs">
+    <div class="tab active">Perfil</div>
+    <div class="tab">Noticias</div>
+  </div>
+
+  <!-- Cabecera -->
+  <div class="header">
+    <div class="avatar"><i class="ti ti-user"></i></div>
+    <div class="header-text">
+      <div class="name">Marc</div>
+      <div class="sub">Mis alérgenos · mis recordatorios</div>
+    </div>
+  </div>
+
+  <div class="scroll">
+
+    <!-- Alérgenos oficiales -->
+    <div class="section">
+      <div class="section-title">Mis alérgenos</div>
+      <div class="section-sub">14 obligatorios (UE 1169/2011)</div>
+      <div class="legend-row">
+        <span><span class="dot dot-grave"></span>Grave</span>
+        <span><span class="dot dot-medio"></span>Medio</span>
+        <span><span class="dot dot-leve"></span>Leve</span>
+        <span><span class="dot dot-no"></span>Sin alergia</span>
+      </div>
+      <div class="grid">
+        <div class="allergen grave on"><i class="ti ti-wheat"></i><span>Gluten</span></div>
+        <div class="allergen"><i class="ti ti-fish"></i><span>Crustáceos</span></div>
+        <div class="allergen medio on"><i class="ti ti-egg"></i><span>Huevos</span></div>
+        <div class="allergen"><i class="ti ti-fish-bone"></i><span>Pescado</span></div>
+        <div class="allergen grave on"><i class="ti ti-nut"></i><span>Cacahuetes</span></div>
+        <div class="allergen"><i class="ti ti-plant-2"></i><span>Soja</span></div>
+        <div class="allergen leve on"><i class="ti ti-droplet"></i><span>Lácteos</span></div>
+        <div class="allergen"><i class="ti ti-tree"></i><span>F. cáscara</span></div>
+        <div class="allergen"><i class="ti ti-leaf"></i><span>Apio</span></div>
+        <div class="allergen"><i class="ti ti-flame"></i><span>Mostaza</span></div>
+        <div class="allergen"><i class="ti ti-circle-dotted"></i><span>Sésamo</span></div>
+        <div class="allergen"><i class="ti ti-flask"></i><span>Sulfitos</span></div>
+        <div class="allergen"><i class="ti ti-flower"></i><span>Altramuces</span></div>
+        <div class="allergen"><i class="ti ti-ripple"></i><span>Moluscos</span></div>
+        <!-- alérgeno propio añadido desde "Otros alérgenos", con su color de gravedad -->
+        <div class="allergen medio on"><i class="ti ti-tag"></i><span>Lactosa</span></div>
+      </div>
+    </div>
+
+    <!-- Otros alérgenos (los que el usuario añade fuera de los 14) -->
+    <div class="divider"></div>
+    <div class="section">
+      <div class="section-title">Otros alérgenos</div>
+      <div class="list-row">
+        <div class="list-icon"><i class="ti ti-tag"></i></div>
+        <div class="list-info">
+          <div class="main">Lactosa</div>
+          <div class="meta">Cercano a <em>Lácteos</em></div>
+        </div>
+        <div class="sev medio"><span class="dot"></span>Medio</div>
+      </div>
+      <div class="list-row empty last">
+        <div class="list-icon"><i class="ti ti-plus"></i></div>
+        <div class="list-info"><div class="main">Espacio para el siguiente…</div></div>
+      </div>
+    </div>
+
+    <!-- Recordatorios (semana actual), pegados al fondo -->
+    <div class="reminders">
+      <div class="divider"></div>
+      <div class="section">
+        <div class="section-title">Recordatorios de medicación</div>
+        <div class="section-sub">Esta semana · se actualiza solo (el año completo está en Calendario)</div>
+
+        <div class="list-row">
+          <div class="list-icon"><i class="ti ti-pill"></i></div>
+          <div class="list-info">
+            <div class="main">Cetirizina 10 mg</div>
+            <div class="meta"><i class="ti ti-clock" style="font-size:11px;"></i> Cada día · 8:00</div>
+          </div>
+          <i class="ti ti-dots-vertical list-end"></i>
+        </div>
+
+        <div class="list-row">
+          <div class="list-icon"><i class="ti ti-first-aid-kit"></i></div>
+          <div class="list-info">
+            <div class="main">Adrenalina (EpiPen)</div>
+            <div class="meta"><i class="ti ti-alert-triangle" style="font-size:11px;"></i> Llevar siempre · aviso caducidad</div>
+          </div>
+          <i class="ti ti-dots-vertical list-end"></i>
+        </div>
+
+        <div class="add-btn"><i class="ti ti-plus"></i> Añadir recordatorio</div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+
+  <!-- Barra de navegación: 5 ítems, escaneo al centro -->
+  <div class="nav">
+    <div class="navitem"><i class="ti ti-search"></i><span>Explorar</span></div>
+    <div class="navitem active"><i class="ti ti-user"></i><span>Perfil</span></div>
+    <div class="navitem"><div class="scanbox"><i class="ti ti-scan"></i></div><span>Escanear</span></div>
+    <div class="navitem"><i class="ti ti-calendar-month"></i><span>Calendario</span></div>
+    <div class="navitem"><i class="ti ti-settings"></i><span>Ajustes</span></div>
+  </div>
+
+</div>
+</body>
+</html>

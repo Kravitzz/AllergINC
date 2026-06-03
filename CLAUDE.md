@@ -16,8 +16,8 @@ alimentarias de la presencia de sus alérgenos en menús de restaurantes.
 
 | # | Subsistema | Estado |
 |---|------------|--------|
-| A | Perfil de usuario: registro de alergias e intolerancias | Pendiente |
-| B | Recordatorios periódicos de medicación/suplementos | Pendiente |
+| A | Perfil de usuario: registro de alergias e intolerancias | Diseñado |
+| B | Recordatorios periódicos de medicación/suplementos | Diseñado (en Perfil) |
 | C | Repositorio de menús de restaurantes (filtrados por perfil) | Pendiente |
 | D | Escaneo de cartas con IA (cámara → OCR → comparar con perfil) | Pendiente |
 
@@ -52,12 +52,23 @@ NO están reguladas igual → quedan para fases posteriores.
 - Centro: minimapa con ubicación del usuario y locales cercanos. Pines con color
   según perfil (verde = apto, ámbar = precaución). Botón "Ver mapa" → mapa grande.
 - Debajo: lista "Vistos recientemente / Favoritos".
-- Barra inferior de 4 botones: Explorar (lupa) → mapa grande · Perfil (persona) ·
-  Escanear (centro, resaltado, cámara) · Ajustes (rueda).
+- Barra inferior (ahora 5 botones): Explorar (lupa) → mapa grande · Perfil
+  (persona) · Escanear (centro, elevado) · Calendario · Ajustes (rueda).
 
 Maqueta: `disenos/maqueta-pantalla-principal.html` (abrir en navegador).
 
-**Pendiente de diseñar:** pantalla de Perfil, pantalla de Escaneo, mapa grande.
+**Pantalla Perfil (aprobada).** Reúne A (alérgenos) y B (recordatorios). Maqueta:
+`disenos/maqueta-perfil.html`.
+- Conmutador superior: pestañas "Perfil" / "Noticias" (tablón futuro de cambios
+  en cartas y novedades de favoritos).
+- "Mis alérgenos": cuadrícula 4 columnas con los 14 obligatorios + propios.
+- Gravedad por color (escala de calor, SIN verde): rojo = grave, naranja = medio,
+  amarillo = leve, gris = sin alergia. El verde queda reservado a "apto".
+- "Otros alérgenos": alérgenos propios fuera de los 14, categorizados por cercanía
+  a uno de ellos; se añaden con el icono `+` del placeholder.
+- Recordatorios = semana actual; la planificación a largo plazo va en Calendario.
+
+**Pendiente de diseñar:** Escaneo, mapa grande (Explorar), Noticias, Calendario.
 
 ## Flujo de trabajo
 
@@ -88,5 +99,6 @@ propone commit).
 
 ## Próximo paso al retomar
 
-Diseñar la pantalla de **Perfil** (subsistema A): cómo registra el usuario sus
-alérgenos e intolerancias, y dónde encajan los recordatorios de medicación (B).
+Perfil (A + B) ya está diseñado y aprobado. Siguiente pantalla a diseñar: a elegir
+entre **Calendario** (largo plazo de B), **Noticias** (tablón), **Escaneo** (D) o
+**mapa grande / Explorar** (C).
