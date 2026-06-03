@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+.expo/
+dist/
+web-build/
+
+# Entorno
+.env
+.env.local
+*.key
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Companion de brainstorming (temporal)
+.superpowers/
+
+# Logs
+*.log
+npm-debug.log*
