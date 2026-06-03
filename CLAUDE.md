@@ -65,6 +65,10 @@ Usamos el plugin **Superpowers**: brainstorming → spec → plan de implementac
 ejecución con pruebas. Estamos en fase de diseño (brainstorming). Aún NO se ha
 escrito código de la app ni el plan de implementación.
 
+El estado exacto dentro del flujo está en `docs/FLUJO-SUPERPOWERS.md`. La memoria
+del proyecto son los documentos, no las conversaciones: mientras el repositorio
+exista y esté commiteado, no se pierde nada.
+
 ## Sistema de sesión (comandos y hooks)
 
 Al **empezar** a trabajar: ejecuta `/inicio` (lee HANDOVER + CLAUDE + git y reporta

@@ -59,3 +59,5 @@ maqueta y sistema de skills/hooks listo. Sin código de aplicación todavía.
 ## Comando para reanudar
 
 Ejecuta /inicio.
+
+> Estado exacto del flujo de Superpowers en `docs/FLUJO-SUPERPOWERS.md`.
