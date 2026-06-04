@@ -7,15 +7,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
 <style>
   :root{
-    --bg:#f4f3ee; --card:#ffffff; --surface:#f1efe8;
-    --text:#1f1f1d; --muted:#5f5e5a; --hint:#8a8980;
-    --line:rgba(0,0,0,0.12);
-    --info:#185fa5;
+    /* tema oscuro */
+    --bg:#0e0e10; --card:#1a1a1c; --surface:#2a2a2e;
+    --text:#f1f0ec; --muted:#a6a5a0; --hint:#706f6b;
+    --line:rgba(255,255,255,0.10);
+    --info:#4a90d9;
     /* escala de gravedad (sin verde: verde queda reservado a "apto") */
-    --grave:#a32d2d; --grave-bg:#fdf0f0; --grave-border:#e8b4b4;
-    --medio:#bf5a1a; --medio-bg:#fdf1e6; --medio-border:#edc3a0;
-    --leve:#c79a00;  --leve-bg:#fdf6da;  --leve-border:#ecd584;
-    --leve-dot:#f0c000; /* amarillo claro para la leyenda */
+    --grave:#e0524f; --grave-bg:rgba(224,82,79,0.16);  --grave-border:rgba(224,82,79,0.50);
+    --medio:#f0a83a; --medio-bg:rgba(240,168,58,0.16); --medio-border:rgba(240,168,58,0.50);
+    --leve:#8fdcb8;  --leve-bg:rgba(143,220,184,0.15);  --leve-border:rgba(143,220,184,0.50);
+    --leve-dot:#a8e6cf; /* verde menta suave */
   }
   *{box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
   body{background:var(--bg); display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:20px;}
@@ -45,10 +46,10 @@
   .dot-grave{background:var(--grave);} .dot-medio{background:var(--medio);}
   .dot-leve{background:var(--leve-dot);} .dot-no{background:var(--hint);}
 
-  /* Cuadrícula de alérgenos (14 oficiales + botón añadir) */
+  /* Cuadrícula de alérgenos (más bajos en altura) */
   .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
-  .allergen{display:flex; flex-direction:column; align-items:center; gap:5px; padding:10px 4px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background:var(--surface);}
-  .allergen i{font-size:22px; color:var(--hint);}
+  .allergen{display:flex; flex-direction:column; align-items:center; gap:4px; padding:6px 4px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background:var(--surface);}
+  .allergen i{font-size:21px; color:var(--hint);}
   .allergen span{font-size:10px; color:var(--muted); text-align:center; line-height:1.3;}
   .allergen.grave{background:var(--grave-bg); border-color:var(--grave-border);}
   .allergen.grave i, .allergen.grave span{color:var(--grave);}
@@ -57,33 +58,29 @@
   .allergen.leve{background:var(--leve-bg); border-color:var(--leve-border);}
   .allergen.leve i, .allergen.leve span{color:var(--leve);}
   .allergen.on span{font-weight:500;}
-  .allergen.add{background:var(--card); border:1.5px dashed var(--info);}
-  .allergen.add i, .allergen.add span{color:var(--info);}
 
   .divider{height:1px; background:var(--line); margin:0 18px 16px;}
 
-  /* Filas tipo lista (compartidas por "Otros alérgenos" y "Recordatorios") */
+  /* Filas tipo lista */
   .list-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line);}
   .list-icon{width:38px; height:38px; border-radius:8px; background:var(--surface); display:flex; align-items:center; justify-content:center; color:var(--info); font-size:20px; flex-shrink:0;}
+  .list-icon.grave{color:var(--grave);} .list-icon.medio{color:var(--medio);} .list-icon.leve{color:var(--leve);}
   .list-info{flex:1;}
   .list-info .main{font-size:14px; font-weight:500; color:var(--text);}
   .list-info .meta{font-size:12px; color:var(--muted); margin-top:2px;}
   .list-info .meta em{font-style:italic;}
-  .list-end{color:var(--hint); font-size:20px; cursor:pointer;}
-  /* badge de gravedad a la derecha */
-  .sev{font-size:12px; font-weight:600; display:flex; align-items:center; gap:5px; white-space:nowrap;}
-  .sev .dot{width:9px; height:9px; border-radius:50%;}
-  .sev.medio{color:var(--medio);} .sev.medio .dot{background:var(--medio);}
+  /* badge de gravedad estilo Calendario (pastilla sólida) */
+  .tag{font-size:11px; font-weight:600; padding:3px 9px; border-radius:999px; white-space:nowrap;}
+  .tag.grave{background:var(--grave); color:#fff;}
+  .tag.medio{background:var(--medio); color:#10221f;}
+  .tag.leve{background:var(--leve); color:#10221f;}
   /* fila vacía (espacio para el siguiente) */
   .list-row.empty .list-icon{background:transparent; border:1.5px dashed var(--info); color:var(--info); cursor:pointer;}
   .list-row.empty .main{color:var(--hint); font-weight:400;}
   .list-row.last{border-bottom:none;}
 
-  .add-btn{display:flex; align-items:center; gap:8px; margin-top:12px; padding:10px 14px; border-radius:10px; border:1.5px dashed var(--line); color:var(--info); font-size:14px; cursor:pointer;}
-  .add-btn i{font-size:18px;}
-
-  /* Recordatorios pegados al fondo */
-  .reminders{margin-top:auto;}
+  /* "Otros alérgenos" pegado al fondo */
+  .bottom{margin-top:auto;}
 
   /* Barra de navegación: 5 ítems, escaneo centrado y elevado */
   .nav{display:flex; border-top:1px solid var(--line); flex-shrink:0; padding:8px 4px 14px;}
@@ -91,7 +88,7 @@
   .navitem i{font-size:24px; color:var(--muted);}
   .navitem span{font-size:10.5px; color:var(--muted);}
   .navitem.active i, .navitem.active span{color:var(--info); font-weight:600;}
-  .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.18);}
+  .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.35);}
   .navitem .scanbox i{color:#fff; font-size:26px;}
 </style>
 </head>
@@ -114,13 +111,13 @@
     <div class="avatar"><i class="ti ti-user"></i></div>
     <div class="header-text">
       <div class="name">Marc</div>
-      <div class="sub">Mis alérgenos · mis recordatorios</div>
+      <div class="sub">Mis alérgenos</div>
     </div>
   </div>
 
   <div class="scroll">
 
-    <!-- Alérgenos oficiales -->
+    <!-- Cuadrícula de alérgenos -->
     <div class="section">
       <div class="section-title">Mis alérgenos</div>
       <div class="section-sub">14 obligatorios (UE 1169/2011)</div>
@@ -150,50 +147,54 @@
       </div>
     </div>
 
-    <!-- Otros alérgenos (los que el usuario añade fuera de los 14) -->
     <div class="divider"></div>
+
+    <!-- ALÉRGENOS: lista de los principales activos de los 14 -->
     <div class="section">
-      <div class="section-title">Otros alérgenos</div>
+      <div class="section-title">Alérgenos</div>
+      <div class="section-sub">Tus principales activos de la lista oficial</div>
+
       <div class="list-row">
-        <div class="list-icon"><i class="ti ti-tag"></i></div>
-        <div class="list-info">
-          <div class="main">Lactosa</div>
-          <div class="meta">Cercano a <em>Lácteos</em></div>
-        </div>
-        <div class="sev medio"><span class="dot"></span>Medio</div>
+        <div class="list-icon grave"><i class="ti ti-wheat"></i></div>
+        <div class="list-info"><div class="main">Gluten</div><div class="meta"><i class="ti ti-pill" style="font-size:11px;"></i> <em>Adrenalina (EpiPen)</em></div></div>
+        <span class="tag grave">Grave</span>
       </div>
-      <div class="list-row empty last">
-        <div class="list-icon"><i class="ti ti-plus"></i></div>
-        <div class="list-info"><div class="main">Espacio para el siguiente…</div></div>
+      <div class="list-row">
+        <div class="list-icon grave"><i class="ti ti-nut"></i></div>
+        <div class="list-info"><div class="main">Cacahuetes</div><div class="meta"><i class="ti ti-pill" style="font-size:11px;"></i> <em>Adrenalina (EpiPen)</em></div></div>
+        <span class="tag grave">Grave</span>
+      </div>
+      <div class="list-row">
+        <div class="list-icon medio"><i class="ti ti-egg"></i></div>
+        <div class="list-info"><div class="main">Huevos</div><div class="meta"><i class="ti ti-pill" style="font-size:11px;"></i> <em>Cetirizina 10 mg</em></div></div>
+        <span class="tag medio">Medio</span>
+      </div>
+      <div class="list-row last">
+        <div class="list-icon leve"><i class="ti ti-droplet"></i></div>
+        <div class="list-info"><div class="main">Lácteos</div><div class="meta"><i class="ti ti-pill" style="font-size:11px;"></i> <em>Montelukast 10 mg</em></div></div>
+        <span class="tag leve">Leve</span>
       </div>
     </div>
 
-    <!-- Recordatorios (semana actual), pegados al fondo -->
-    <div class="reminders">
+    <!-- OTROS ALÉRGENOS (los propios fuera de los 14), pegado al fondo -->
+    <div class="bottom">
       <div class="divider"></div>
       <div class="section">
-        <div class="section-title">Recordatorios de medicación</div>
-        <div class="section-sub">Esta semana · se actualiza solo (el año completo está en Calendario)</div>
+        <div class="section-title">Otros alérgenos</div>
+        <div class="section-sub">Los que añades fuera de los 14</div>
 
         <div class="list-row">
-          <div class="list-icon"><i class="ti ti-pill"></i></div>
+          <div class="list-icon medio"><i class="ti ti-tag"></i></div>
           <div class="list-info">
-            <div class="main">Cetirizina 10 mg</div>
-            <div class="meta"><i class="ti ti-clock" style="font-size:11px;"></i> Cada día · 8:00</div>
+            <div class="main">Lactosa</div>
+            <div class="meta"><i class="ti ti-pill" style="font-size:11px;"></i> <em>Lactasa</em> · Cercano a Lácteos</div>
           </div>
-          <i class="ti ti-dots-vertical list-end"></i>
+          <span class="tag medio">Medio</span>
         </div>
-
-        <div class="list-row">
-          <div class="list-icon"><i class="ti ti-first-aid-kit"></i></div>
-          <div class="list-info">
-            <div class="main">Adrenalina (EpiPen)</div>
-            <div class="meta"><i class="ti ti-alert-triangle" style="font-size:11px;"></i> Llevar siempre · aviso caducidad</div>
-          </div>
-          <i class="ti ti-dots-vertical list-end"></i>
+        <div class="list-row empty last">
+          <div class="list-icon"><i class="ti ti-plus"></i></div>
+          <div class="list-info"><div class="main">Espacio para el siguiente…</div></div>
         </div>
-
-        <div class="add-btn"><i class="ti ti-plus"></i> Añadir recordatorio</div>
       </div>
     </div>
 

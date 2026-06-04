@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maqueta · Calendario (rejilla)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
+<style>
+  :root{
+    /* tema oscuro */
+    --bg:#0e0e10; --card:#1a1a1c; --surface:#2a2a2e;
+    --text:#f1f0ec; --muted:#a6a5a0; --hint:#706f6b;
+    --line:rgba(255,255,255,0.10);
+    --info:#4a90d9;
+    /* importancia de la cita (la elige el usuario al crearla) */
+    --alta:#e0524f; --media:#f0a83a; --baja:#5b9be0;
+    --med:#2bb39b;     /* medicación puntual / mensual */
+    --daily:#46b56e;   /* punto: evento diario */
+  }
+  *{box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
+  body{background:var(--bg); display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:20px;}
+  .phone{width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; height:880px; position:relative;}
+  .statusbar{display:flex; justify-content:space-between; font-size:12px; color:var(--hint); padding:12px 18px 0; flex-shrink:0;}
+
+  /* Barra superior: mes/año (grande) a la izquierda, 2 botones de vista a la derecha */
+  .topbar{display:flex; justify-content:space-between; align-items:flex-start; padding:12px 18px 6px; flex-shrink:0;}
+  .ym .year{font-size:15px; color:var(--muted); font-weight:500;}
+  .ym .month{font-size:34px; font-weight:700; color:var(--text); line-height:1.0;}
+  .viewtoggle{display:inline-flex; background:var(--surface); border-radius:999px; padding:3px; margin-top:8px;}
+  .viewtoggle .opt{padding:7px 11px; border-radius:999px; font-size:10.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:var(--muted); cursor:pointer; white-space:nowrap;}
+  .viewtoggle .opt.active{background:var(--info); color:#fff;}
+
+  /* Cuadrícula del mes (achatada) */
+  .cal{padding:2px 14px 0;}
+  .weekdays{display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:2px;}
+  .weekdays span{text-align:center; font-size:10.5px; color:var(--hint); font-weight:600;}
+  .days{display:grid; grid-template-columns:repeat(7,1fr);}
+  .day{height:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer;}
+  .daynum{width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text);}
+  .day.out .daynum{color:var(--hint); opacity:.45;}
+  /* citas: círculo de color (importancia) sobre el número */
+  .day.alta .daynum{background:var(--alta); color:#fff; font-weight:700;}
+  .day.media .daynum{background:var(--media); color:#10221f; font-weight:700;}
+  .day.baja .daynum{background:var(--baja); color:#fff; font-weight:700;}
+  /* hoy: anillo claro */
+  .day.today .daynum{outline:2px solid var(--text); outline-offset:2px;}
+  /* puntos debajo del número */
+  .dots{height:6px; display:flex; gap:3px; align-items:center;}
+  .dots .pt{width:5px; height:5px; border-radius:50%;}
+  .pt-daily{background:var(--daily);} .pt-month{background:var(--med);}
+
+  /* Leyenda */
+  .legend{display:flex; flex-wrap:wrap; gap:8px 14px; padding:12px 18px 4px; font-size:11.5px; color:var(--muted);}
+  .legend .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+
+  .divider{height:1px; background:var(--line); margin:8px 18px 12px;}
+
+  /* Lista de eventos */
+  .scroll{flex:1; overflow-y:auto; padding-bottom:70px;}
+  .section{padding:0 18px 8px;}
+  .section-title{font-size:15px; font-weight:600; color:var(--text); margin-bottom:2px;}
+  .section-sub{font-size:12px; color:var(--hint); margin-bottom:8px;}
+
+  .event{display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--line);}
+  .event.last{border-bottom:none;}
+  .event .time{width:60px; flex-shrink:0; text-align:right;}
+  .event .time .h{font-size:13px; font-weight:600; color:var(--text);}
+  .event .time .dur{font-size:11px; color:var(--hint); margin-top:2px;}
+  .event .bar{width:4px; border-radius:4px; flex-shrink:0;}
+  .bar.alta{background:var(--alta);} .bar.media{background:var(--media);} .bar.baja{background:var(--baja);} .bar.med{background:var(--med);} .bar.daily{background:var(--daily);}
+  .event .body{flex:1;}
+  .event .body .t{font-size:14px; font-weight:500; color:var(--text);}
+  .event .body .loc{font-size:12px; color:var(--muted); margin-top:2px; display:flex; align-items:center; gap:5px;}
+  .event .tag{font-size:11px; font-weight:600; align-self:flex-start; padding:2px 8px; border-radius:999px; color:#10221f;}
+  .tag.alta{background:var(--alta); color:#fff;} .tag.media{background:var(--media);} .tag.baja{background:var(--baja); color:#fff;} .tag.med{background:var(--med);} .tag.daily{background:var(--daily); color:#fff;}
+
+  /* Botón flotante para añadir evento */
+  .fab{position:absolute; right:22px; bottom:96px; width:54px; height:54px; border-radius:50%; background:var(--info); color:#fff; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 3px 8px rgba(0,0,0,.4);}
+
+  /* Barra de navegación */
+  .nav{display:flex; border-top:1px solid var(--line); flex-shrink:0; padding:8px 4px 14px;}
+  .navitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;}
+  .navitem i{font-size:24px; color:var(--muted);}
+  .navitem span{font-size:10.5px; color:var(--muted);}
+  .navitem.active i, .navitem.active span{color:var(--info); font-weight:600;}
+  .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.35);}
+  .navitem .scanbox i{color:#fff; font-size:26px;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <span><i class="ti ti-wifi"></i> <i class="ti ti-battery-3"></i></span>
+  </div>
+
+  <!-- Mes/año + botones de vista -->
+  <div class="topbar">
+    <div class="ym">
+      <div class="year">2026</div>
+      <div class="month">Junio</div>
+    </div>
+    <div class="viewtoggle">
+      <div class="opt active">Calendario</div>
+      <div class="opt">Agenda</div>
+    </div>
+  </div>
+
+  <!-- Cuadrícula del mes (junio 2026 empieza en lunes) -->
+  <div class="cal">
+    <div class="weekdays">
+      <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+    </div>
+    <div class="days">
+      <div class="day"><div class="daynum">1</div><div class="dots"><span class="pt pt-daily"></span><span class="pt pt-month"></span></div></div>
+      <div class="day"><div class="daynum">2</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">3</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day today alta"><div class="daynum">4</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">5</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">6</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">7</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+
+      <div class="day"><div class="daynum">8</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">9</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">10</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day media"><div class="daynum">11</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">12</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">13</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">14</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+
+      <div class="day"><div class="daynum">15</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">16</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">17</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day baja"><div class="daynum">18</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">19</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">20</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">21</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+
+      <div class="day"><div class="daynum">22</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">23</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">24</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">25</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">26</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">27</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">28</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+
+      <div class="day"><div class="daynum">29</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day"><div class="daynum">30</div><div class="dots"><span class="pt pt-daily"></span></div></div>
+      <div class="day out"><div class="daynum">1</div></div>
+      <div class="day out"><div class="daynum">2</div></div>
+      <div class="day out"><div class="daynum">3</div></div>
+      <div class="day out"><div class="daynum">4</div></div>
+      <div class="day out"><div class="daynum">5</div></div>
+    </div>
+  </div>
+
+  <!-- Leyenda -->
+  <div class="legend">
+    <span><span class="dot" style="background:var(--alta);"></span>Cita alta</span>
+    <span><span class="dot" style="background:var(--media);"></span>Media</span>
+    <span><span class="dot" style="background:var(--baja);"></span>Baja</span>
+    <span><span class="dot" style="background:var(--daily);"></span>Diario</span>
+    <span><span class="dot" style="background:var(--med);"></span>Mensual</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Eventos del día seleccionado + próximos -->
+  <div class="scroll">
+    <div class="section">
+      <div class="section-title">Jueves 4 de junio</div>
+      <div class="section-sub">3 eventos</div>
+
+      <div class="event">
+        <div class="time"><div class="h">8:00</div><div class="dur">cada día</div></div>
+        <div class="bar daily"></div>
+        <div class="body">
+          <div class="t">Cetirizina 10 mg</div>
+          <div class="loc"><i class="ti ti-pill" style="font-size:12px;"></i> Medicación diaria</div>
+        </div>
+        <span class="tag daily">Diario</span>
+      </div>
+
+      <div class="event">
+        <div class="time"><div class="h">11:30</div><div class="dur">1 h</div></div>
+        <div class="bar alta"></div>
+        <div class="body">
+          <div class="t">Cita con alergólogo</div>
+          <div class="loc"><i class="ti ti-map-pin" style="font-size:12px;"></i> Hospital La Paz</div>
+        </div>
+        <span class="tag alta">Alta</span>
+      </div>
+
+      <div class="event last">
+        <div class="time"><div class="h">22:00</div><div class="dur">cada día</div></div>
+        <div class="bar daily"></div>
+        <div class="body">
+          <div class="t">Montelukast 10 mg</div>
+          <div class="loc"><i class="ti ti-pill" style="font-size:12px;"></i> Medicación diaria</div>
+        </div>
+        <span class="tag daily">Diario</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">Próximos</div>
+      <div class="section-sub">Este mes y siguientes</div>
+
+      <div class="event">
+        <div class="time"><div class="h">11 jun</div><div class="dur">9:00</div></div>
+        <div class="bar media"></div>
+        <div class="body">
+          <div class="t">Análisis de sangre</div>
+          <div class="loc"><i class="ti ti-map-pin" style="font-size:12px;"></i> Centro de salud</div>
+        </div>
+        <span class="tag media">Media</span>
+      </div>
+
+      <div class="event">
+        <div class="time"><div class="h">18 jun</div><div class="dur">17:00</div></div>
+        <div class="bar baja"></div>
+        <div class="body">
+          <div class="t">Dosis de inmunoterapia</div>
+          <div class="loc"><i class="ti ti-vaccine" style="font-size:12px;"></i> Centro de salud</div>
+        </div>
+        <span class="tag baja">Baja</span>
+      </div>
+
+      <div class="event last">
+        <div class="time"><div class="h">1 jul</div><div class="dur">mensual</div></div>
+        <div class="bar med"></div>
+        <div class="body">
+          <div class="t">Vitamina D</div>
+          <div class="loc"><i class="ti ti-pill" style="font-size:12px;"></i> Suplemento mensual</div>
+        </div>
+        <span class="tag med">Mensual</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab"><i class="ti ti-plus"></i></div>
+
+  <!-- Barra de navegación: Calendario activo -->
+  <div class="nav">
+    <div class="navitem"><i class="ti ti-search"></i><span>Explorar</span></div>
+    <div class="navitem"><i class="ti ti-user"></i><span>Perfil</span></div>
+    <div class="navitem"><div class="scanbox"><i class="ti ti-scan"></i></div><span>Escanear</span></div>
+    <div class="navitem active"><i class="ti ti-calendar-month"></i><span>Calendario</span></div>
+    <div class="navitem"><i class="ti ti-settings"></i><span>Ajustes</span></div>
+  </div>
+
+</div>
+</body>
+</html>

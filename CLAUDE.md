@@ -17,7 +17,7 @@ alimentarias de la presencia de sus alérgenos en menús de restaurantes.
 | # | Subsistema | Estado |
 |---|------------|--------|
 | A | Perfil de usuario: registro de alergias e intolerancias | Diseñado |
-| B | Recordatorios periódicos de medicación/suplementos | Diseñado (en Perfil) |
+| B | Recordatorios periódicos de medicación/suplementos | Diseñado (en Calendario) |
 | C | Repositorio de menús de restaurantes (filtrados por perfil) | Pendiente |
 | D | Escaneo de cartas con IA (cámara → OCR → comparar con perfil) | Pendiente |
 
@@ -47,6 +47,9 @@ NO están reguladas igual → quedan para fases posteriores.
 
 ## Diseño decidido hasta ahora
 
+> **Tema oscuro** en toda la app (paleta `#0e0e10`/`#1a1a1c`, acento azul `#4a90d9`).
+> La pantalla de Inicio quedó pendiente de un rediseño más a fondo.
+
 **Pantalla principal (versión 1, aprobada).** Híbrido de dos referencias:
 - Arriba: saludo "Hola, Marc · ¿Qué vamos a comer hoy?".
 - Centro: minimapa con ubicación del usuario y locales cercanos. Pines con color
@@ -57,18 +60,28 @@ NO están reguladas igual → quedan para fases posteriores.
 
 Maqueta: `disenos/maqueta-pantalla-principal.html` (abrir en navegador).
 
-**Pantalla Perfil (aprobada).** Reúne A (alérgenos) y B (recordatorios). Maqueta:
-`disenos/maqueta-perfil.html`.
+**Pantalla Perfil (aprobada).** Subsistema A. Maqueta: `disenos/maqueta-perfil.html`.
 - Conmutador superior: pestañas "Perfil" / "Noticias" (tablón futuro de cambios
-  en cartas y novedades de favoritos).
+  en cartas y novedades de favoritos; SIN concretar aún).
 - "Mis alérgenos": cuadrícula 4 columnas con los 14 obligatorios + propios.
-- Gravedad por color (escala de calor, SIN verde): rojo = grave, naranja = medio,
-  amarillo = leve, gris = sin alergia. El verde queda reservado a "apto".
+- Gravedad por color: rojo = grave, naranja = medio, verde menta = leve, gris =
+  sin alergia. (El verde "apto" de mapa/menús es de otro contexto.)
+- "Alérgenos": lista de los activos de los 14, con su gravedad (badge tipo pastilla)
+  y el medicamento/tratamiento que lo controla (en cursiva).
 - "Otros alérgenos": alérgenos propios fuera de los 14, categorizados por cercanía
   a uno de ellos; se añaden con el icono `+` del placeholder.
-- Recordatorios = semana actual; la planificación a largo plazo va en Calendario.
+- Los recordatorios de medicación YA NO están en Perfil: viven en Calendario.
 
-**Pendiente de diseñar:** Escaneo, mapa grande (Explorar), Noticias, Calendario.
+**Pantalla Calendario (aprobada).** Subsistema B (largo plazo). Dos vistas con un
+conmutador CALENDARIO / AGENDA arriba a la derecha:
+- Rejilla mensual (`disenos/maqueta-calendario.html`): citas marcadas con círculo
+  de color por importancia (alta/media/baja); punto verde bajo el día = evento
+  diario, punto teal = mensual. Lista de eventos del día + "Próximos". Botón `+`.
+- Agenda/línea de tiempo (`disenos/maqueta-calendario-agenda.html`): eventos por
+  hora, con segmentado DÍA / SEMANA / MES. Botón `+` flotante.
+
+**Pendiente de diseñar:** Escaneo, mapa grande (Explorar), Noticias, y rediseño de
+la pantalla de Inicio.
 
 ## Flujo de trabajo
 
@@ -99,6 +112,9 @@ propone commit).
 
 ## Próximo paso al retomar
 
-Perfil (A + B) ya está diseñado y aprobado. Siguiente pantalla a diseñar: a elegir
-entre **Calendario** (largo plazo de B), **Noticias** (tablón), **Escaneo** (D) o
-**mapa grande / Explorar** (C).
+Aprobadas y en tema oscuro: Inicio, Perfil y Calendario. Pendientes acordados para
+la próxima sesión:
+1. **Rediseñar la pantalla de Inicio** (el usuario quiere mejorarla).
+2. **Concretar la pantalla de Noticias** (pestaña dentro de Perfil; aún sin definir).
+
+Más adelante: Escaneo (D) y mapa grande / Explorar (C).

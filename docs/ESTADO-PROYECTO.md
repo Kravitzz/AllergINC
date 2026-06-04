@@ -1,11 +1,12 @@
 # Estado del proyecto
 
-Última actualización: 2026-06-04
+Última actualización: 2026-06-05
 
 ## Resumen
 
-Fase actual: **diseño (brainstorming)**. Dos pantallas aprobadas (principal y
-Perfil). Sin código de app ni plan de implementación todavía.
+Fase actual: **diseño (brainstorming)**. Tres pantallas aprobadas (Inicio, Perfil
+y Calendario), todas en **tema oscuro**. Sin código de app ni plan de
+implementación todavía.
 
 ## Decisiones tomadas
 
@@ -17,17 +18,23 @@ Perfil). Sin código de app ni plan de implementación todavía.
    escaneo con IA (D).
 3. **Pantalla principal aprobada** como versión 1 (híbrido mapa + accesos).
 4. **Pila tentativa:** React Native + Expo / Cloudflare D1 / API de IA por decidir.
-5. **Pantalla Perfil aprobada** (subsistemas A + B). Gravedad por color rojo/
-   naranja/amarillo (sin verde, reservado a "apto"); alérgenos propios añadibles
-   con categorización por cercanía a los 14; recordatorios = semana actual.
+5. **Pantalla Perfil aprobada** (subsistema A). Gravedad por color rojo/naranja/
+   verde menta; cuadrícula de 14 + propios; lista "Alérgenos" con medicamento que
+   controla cada uno; sección "Otros alérgenos" para los propios. Los recordatorios
+   ya NO están en Perfil.
 6. **Barra inferior ampliada a 5 botones:** Explorar · Perfil · Escanear (centro)
    · Calendario · Ajustes.
+7. **Pantalla Calendario aprobada** (subsistema B, largo plazo). Dos vistas
+   (rejilla mensual + agenda/línea de tiempo) con conmutador CALENDARIO/AGENDA;
+   citas con importancia alta/media/baja; medicación diaria (punto) y mensual.
+8. **Tema oscuro adoptado en toda la app.** Inicio quedó pendiente de rediseño.
 
 ## Decisiones pendientes (a resolver al retomar)
 
+- **Rediseño de la pantalla de Inicio.**
+- **Concretar la pantalla Noticias** (pestaña dentro de Perfil; sin definir).
 - Diseño de la pantalla de Escaneo y elección del proveedor de IA + su coste.
 - Diseño del mapa grande (pantalla "Explorar").
-- Diseño de la pantalla Noticias (tablón) y Calendario (largo plazo).
 - De dónde salen los datos de menús (C): ¿los introduce el restaurante?, ¿se
   importan de fuentes públicas?, ¿los valida alguien?
 
@@ -45,3 +52,6 @@ Perfil). Sin código de app ni plan de implementación todavía.
 - 2026-06-03: Creación del repositorio, estructura, contexto y primera maqueta.
 - 2026-06-04: Pantalla Perfil diseñada y aprobada (maqueta `maqueta-perfil.html`);
   barra inferior ampliada a 5 botones con Calendario.
+- 2026-06-05: Pantalla Calendario diseñada y aprobada (rejilla + agenda). Tema
+  oscuro aplicado a Inicio, Perfil y Calendario. Perfil reestructurado (sin
+  recordatorios, nuevas secciones "Alérgenos" y "Otros alérgenos" con medicamento).
