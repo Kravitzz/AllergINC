@@ -35,22 +35,15 @@ Pantallas aprobadas: Inicio, Explorar (mapa, emergente y ficha de local), Perfil
 
 ## Pantallas
 
-<table align="center">
-<tr>
-<td align="center"><img src="disenos/capturas/maqueta-pantalla-principal.png" width="195" alt="Inicio"><br><sub><b>Inicio</b> · descubrimiento</sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-explorar.png" width="195" alt="Explorar"><br><sub><b>Explorar</b> · mapa</sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-explorar-preview.png" width="195" alt="Emergente de local"><br><sub><b>Explorar</b> · emergente</sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-ficha-local.png" width="195" alt="Ficha de local"><br><sub><b>Ficha</b> de local</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="disenos/capturas/maqueta-perfil.png" width="195" alt="Perfil"><br><sub><b>Perfil</b> · alérgenos</sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-noticias.png" width="195" alt="Noticias"><br><sub><b>Noticias</b></sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-calendario.png" width="195" alt="Calendario"><br><sub><b>Calendario</b> · rejilla</sub></td>
-<td align="center"><img src="disenos/capturas/maqueta-calendario-agenda.png" width="195" alt="Agenda"><br><sub><b>Calendario</b> · agenda</sub></td>
-</tr>
-</table>
+| <img src="disenos/capturas/maqueta-pantalla-principal.png" width="190" alt="Inicio"> | <img src="disenos/capturas/maqueta-explorar.png" width="190" alt="Explorar mapa"> | <img src="disenos/capturas/maqueta-explorar-preview.png" width="190" alt="Explorar emergente"> | <img src="disenos/capturas/maqueta-ficha-local.png" width="190" alt="Ficha de local"> |
+|:---:|:---:|:---:|:---:|
+| **Inicio** · descubrimiento | **Explorar** · mapa | **Explorar** · emergente | **Ficha** de local |
 
-<div align="center"><sub>Las capturas no muestran los iconos (se cargan por CDN). Abre los archivos de <code>disenos/</code> en el navegador para verlas completas.</sub></div>
+| <img src="disenos/capturas/maqueta-perfil.png" width="190" alt="Perfil"> | <img src="disenos/capturas/maqueta-noticias.png" width="190" alt="Noticias"> | <img src="disenos/capturas/maqueta-calendario.png" width="190" alt="Calendario rejilla"> | <img src="disenos/capturas/maqueta-calendario-agenda.png" width="190" alt="Calendario agenda"> |
+|:---:|:---:|:---:|:---:|
+| **Perfil** · alérgenos | **Noticias** | **Calendario** · rejilla | **Calendario** · agenda |
+
+_Las capturas no muestran los iconos (se cargan por CDN). Abre los archivos de `disenos/` en el navegador para verlas completas._
 
 ## Seguridad y fiabilidad
 
