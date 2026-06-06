@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maqueta · Noticias</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#0e0e10; --card:#1a1a1c; --surface:#2a2a2e;
+    --text:#f1f0ec; --muted:#a6a5a0; --hint:#706f6b;
+    --line:rgba(255,255,255,0.10);
+    --info:#4a90d9; --success:#46b56e; --warning:#f0a83a; --danger:#e0524f;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
+  body{background:var(--bg); display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:20px;}
+  .phone{width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; height:880px;}
+  .statusbar{display:flex; justify-content:space-between; font-size:12px; color:var(--hint); padding:12px 18px 0; flex-shrink:0;}
+
+  /* Conmutador superior: Perfil / Noticias */
+  .tabs{display:flex; gap:8px; padding:14px 18px 4px; flex-shrink:0;}
+  .tab{flex:1; text-align:center; padding:10px 0; border-radius:999px; font-size:14px; font-weight:600; border:1.5px solid var(--line); color:var(--muted); cursor:pointer;}
+  .tab.active{background:var(--info); border-color:var(--info); color:#fff;}
+
+  /* Cabecera */
+  .header{padding:14px 18px 6px; flex-shrink:0;}
+  .header .title{font-size:20px; font-weight:600; color:var(--text);}
+  .header .sub{font-size:13px; color:var(--muted); margin-top:2px;}
+
+  /* Filtros */
+  .filters{display:flex; gap:8px; padding:8px 18px 4px; flex-shrink:0;}
+  .filter{padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600; border:1.5px solid var(--line); color:var(--muted); cursor:pointer;}
+  .filter.active{background:var(--surface); border-color:var(--surface); color:var(--text);}
+
+  /* Feed */
+  .feed{flex:1; overflow-y:auto; padding:10px 18px 16px;}
+  .group{font-size:11px; font-weight:700; color:var(--hint); text-transform:uppercase; letter-spacing:.6px; margin:10px 2px 8px;}
+  .group:first-child{margin-top:0;}
+
+  .card{background:var(--surface); border-radius:14px; padding:12px 14px; margin-bottom:10px; border-left:4px solid var(--info);}
+  .card.apto{border-left-color:var(--success);}
+  .card.prec{border-left-color:var(--warning);}
+  .card.cont{border-left-color:var(--danger);}
+  .card.nuevo{border-left-color:var(--info);}
+  .card .top{display:flex; align-items:flex-start; gap:10px;}
+  .card .ic{width:34px; height:34px; border-radius:9px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;}
+  .card.apto .ic{color:var(--success);} .card.prec .ic{color:var(--warning);} .card.cont .ic{color:var(--danger);} .card.nuevo .ic{color:var(--info);}
+  .card .head{flex:1;}
+  .card .title{font-size:14px; font-weight:600; color:var(--text);}
+  .card .date{font-size:10.5px; color:var(--hint); margin-top:2px;}
+  .card .desc{font-size:12.5px; color:var(--muted); line-height:1.45; margin-top:8px;}
+  .card .badge{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:3px 9px; border-radius:999px; margin-top:10px;}
+  .badge.apto{background:var(--success); color:#10221f;}
+  .badge.prec{background:var(--warning); color:#10221f;}
+  .badge.cont{background:var(--danger); color:#10221f;}
+  .verify{font-size:11px; color:var(--hint); margin-top:8px; display:flex; gap:5px; align-items:center;}
+
+  /* Barra de navegación: 5 ítems (Perfil activo: Noticias vive dentro de Perfil) */
+  .nav{display:flex; border-top:1px solid var(--line); flex-shrink:0; padding:8px 4px 14px;}
+  .navitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;}
+  .navitem i{font-size:24px; color:var(--muted);}
+  .navitem span{font-size:10.5px; color:var(--muted);}
+  .navitem.active i, .navitem.active span{color:var(--info); font-weight:600;}
+  .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.35);}
+  .navitem .scanbox i{color:#fff; font-size:26px;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <span><i class="ti ti-wifi"></i> <i class="ti ti-battery-3"></i></span>
+  </div>
+
+  <!-- Conmutador superior -->
+  <div class="tabs">
+    <div class="tab">Perfil</div>
+    <div class="tab active">Noticias</div>
+  </div>
+
+  <!-- Cabecera -->
+  <div class="header">
+    <div class="title">Noticias</div>
+    <div class="sub">Cambios en cartas y novedades de tus favoritos</div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <div class="filter active">Todo</div>
+    <div class="filter">Favoritos</div>
+    <div class="filter">Alertas</div>
+  </div>
+
+  <!-- Feed -->
+  <div class="feed">
+
+    <div class="group">Hoy</div>
+
+    <div class="card cont">
+      <div class="top">
+        <div class="ic"><i class="ti ti-alert-triangle"></i></div>
+        <div class="head">
+          <div class="title">Can Pinotxo · nuevo alérgeno en su carta</div>
+          <div class="date">Hoy · 9:10</div>
+        </div>
+      </div>
+      <div class="desc">Han añadido un plato con <b>cacahuetes</b>, uno de tus alérgenos graves. Revisa antes de ir.</div>
+      <span class="badge cont">Peligro</span>
+      <div class="verify"><i class="ti ti-info-circle" style="font-size:12px;"></i> Verifica siempre con el restaurante.</div>
+    </div>
+
+    <div class="card prec">
+      <div class="top">
+        <div class="ic"><i class="ti ti-tools-kitchen-2"></i></div>
+        <div class="head">
+          <div class="title">La Trattoria · carta actualizada</div>
+          <div class="date">Hoy · 8:02</div>
+        </div>
+      </div>
+      <div class="desc">Cambios en 3 platos. Algunos podrían contener <b>gluten</b>; falta confirmación.</div>
+      <span class="badge prec">Precaución</span>
+      <div class="verify"><i class="ti ti-info-circle" style="font-size:12px;"></i> Verifica siempre con el restaurante.</div>
+    </div>
+
+    <div class="group">Esta semana</div>
+
+    <div class="card apto">
+      <div class="top">
+        <div class="ic"><i class="ti ti-tools-kitchen-2"></i></div>
+        <div class="head">
+          <div class="title">Bar Mendi · ahora apto para tu perfil</div>
+          <div class="date">Lun · 18:40</div>
+        </div>
+      </div>
+      <div class="desc">Han retirado los <b>lácteos</b> de su menú del día. Ya no contiene ninguno de tus alérgenos.</div>
+      <span class="badge apto">Seguro</span>
+      <div class="verify"><i class="ti ti-info-circle" style="font-size:12px;"></i> Verifica siempre con el restaurante.</div>
+    </div>
+
+    <div class="card nuevo">
+      <div class="top">
+        <div class="ic"><i class="ti ti-map-pin"></i></div>
+        <div class="head">
+          <div class="title">Nuevo cerca de ti · Sojita Veggie</div>
+          <div class="date">Dom · 12:15</div>
+        </div>
+      </div>
+      <div class="desc">Un local nuevo a 400 m marca todos sus platos con los 14 alérgenos. Échale un vistazo.</div>
+    </div>
+
+    <div class="card nuevo">
+      <div class="top">
+        <div class="ic"><i class="ti ti-bell"></i></div>
+        <div class="head">
+          <div class="title">Mejoras en la app</div>
+          <div class="date">Sáb · 10:00</div>
+        </div>
+      </div>
+      <div class="desc">Ahora el escaneo detecta mejor las trazas de frutos de cáscara.</div>
+    </div>
+
+  </div>
+
+  <!-- Barra de navegación: Perfil activo -->
+  <div class="nav">
+    <div class="navitem"><i class="ti ti-home"></i><span>Inicio</span></div>
+    <div class="navitem active"><i class="ti ti-user"></i><span>Perfil</span></div>
+    <div class="navitem"><div class="scanbox"><i class="ti ti-scan"></i></div><span>Escanear</span></div>
+    <div class="navitem"><i class="ti ti-calendar-month"></i><span>Calendario</span></div>
+    <div class="navitem"><i class="ti ti-settings"></i><span>Ajustes</span></div>
+  </div>
+
+</div>
+</body>
+</html>

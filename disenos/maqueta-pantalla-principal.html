@@ -3,104 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maqueta · Pantalla principal</title>
+<title>Maqueta · Inicio</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
 <style>
   :root{
-    /* tema oscuro */
-    --bg:#0e0e10; --card:#1a1a1c; --surface:#2a2a2e; --map:#24242a;
+    --bg:#0e0e10; --card:#1a1a1c; --surface:#2a2a2e;
     --text:#f1f0ec; --muted:#a6a5a0; --hint:#706f6b;
     --line:rgba(255,255,255,0.10);
     --info:#4a90d9; --success:#46b56e; --warning:#f0a83a; --danger:#e0524f;
+    --grave:#e0524f; --medio:#f0a83a; --leve:#8fdcb8;
   }
   *{box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
   body{background:var(--bg); display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:20px;}
-  .phone{width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; min-height:90vh;}
-  .statusbar{display:flex; justify-content:space-between; font-size:12px; color:var(--hint); padding:12px 18px 0;}
-  .greet{padding:14px 18px 10px;}
-  .greet .hi{font-size:14px; color:var(--muted);}
-  .greet .q{font-size:20px; font-weight:500; color:var(--text); margin-top:2px;}
-  .mapwrap{padding:0 18px;}
-  .map{position:relative; background:var(--map); border-radius:14px; height:190px; overflow:hidden;}
-  .street{position:absolute; background:rgba(255,255,255,0.10);}
-  .me{position:absolute; top:42%; left:35%; width:18px; height:18px; background:var(--info); border-radius:50%; border:3px solid var(--card);}
-  .pin{position:absolute; width:24px; height:24px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); display:flex; align-items:center; justify-content:center; border:2px solid var(--card);}
-  .pin i{color:#10221f; font-size:12px; transform:rotate(45deg);}
-  .legend{position:absolute; bottom:8px; left:8px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:5px 9px; display:flex; gap:10px; font-size:11px;}
-  .seemap{position:absolute; top:8px; right:8px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 9px; font-size:12px; color:var(--muted); display:flex; gap:4px; align-items:center;}
-  .recent{padding:16px 18px 10px; flex:1;}
-  .recent .head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
-  .recent .head .t{font-size:15px; font-weight:500; color:var(--text);}
-  .recent .head .f{font-size:12px; color:var(--hint);}
-  .row{display:flex; gap:12px; align-items:center; padding:11px 0; border-bottom:1px solid var(--line);}
-  .thumb{width:46px; height:46px; border-radius:8px; background:var(--surface); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:22px;}
-  .row .name{font-size:14px; font-weight:500; color:var(--text);}
-  .row .status{font-size:12px; margin-top:2px;}
-  .nav{display:flex; border-top:1px solid var(--line); padding:8px 4px 14px;}
+  .phone{width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; height:880px;}
+  .statusbar{display:flex; justify-content:space-between; font-size:12px; color:var(--hint); padding:12px 18px 0; flex-shrink:0;}
+
+  /* Cabecera */
+  .header{display:flex; justify-content:space-between; align-items:flex-start; padding:12px 18px 8px; flex-shrink:0;}
+  .greet .hi{font-size:13px; color:var(--muted);}
+  .greet .q{font-size:20px; font-weight:600; color:var(--text); margin-top:2px;}
+  .header .acts{display:flex; gap:14px; font-size:22px; color:var(--muted); padding-top:4px;}
+
+  /* Buscador */
+  .search{margin:4px 18px 8px; background:var(--surface); border-radius:12px; padding:11px 14px; display:flex; align-items:center; gap:10px; color:var(--hint); font-size:14px; flex-shrink:0;}
+
+  /* 3 botones: Favoritos / Locales / Explorar */
+  .seg3{display:flex; gap:8px; padding:4px 18px 8px; flex-shrink:0;}
+  .s3{flex:1; display:flex; gap:6px; justify-content:center; align-items:center; padding:9px 0; border-radius:999px; font-size:13px; font-weight:600; border:1.5px solid var(--line); color:var(--muted); cursor:pointer;}
+  .s3 i{font-size:16px;}
+  .s3.active{background:var(--info); border-color:var(--info); color:#fff;}
+  .s3.explore{border-style:dashed; border-color:var(--info); color:var(--info);}
+
+  /* Filtros por tipo */
+  .filters{display:flex; gap:8px; overflow-x:auto; padding:2px 18px 10px; flex-shrink:0;}
+  .filters::-webkit-scrollbar{display:none;}
+  .fchip{white-space:nowrap; display:flex; gap:5px; align-items:center; padding:7px 12px; border-radius:999px; border:1.5px solid var(--line); color:var(--muted); font-size:12px; cursor:pointer;}
+  .fchip i{font-size:14px;}
+  .fchip.active{background:var(--surface); border-color:var(--surface); color:var(--text);}
+
+  /* Rejilla de restaurantes (2 columnas) */
+  .content{flex:1; overflow-y:auto; padding:4px 18px 16px;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .rcard{background:var(--surface); border-radius:14px; overflow:hidden; display:flex; flex-direction:column;}
+  /* foto más baja, mismo ancho */
+  .photo{height:160px; position:relative; background:linear-gradient(135deg,#33333a,#23232a); display:flex; align-items:center; justify-content:center; color:#55555c; font-size:34px;}
+  .verdict{position:absolute; top:8px; left:8px; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px; color:#10221f;}
+  .verdict.seguro{background:var(--success);}
+  .verdict.prec{background:var(--warning);}
+  .verdict.peligro{background:var(--danger);}
+  /* peligro con graves + leves: mitad rojo / mitad naranja, divisor en diagonal "/" */
+  .verdict.peligro.mix{background:linear-gradient(135deg,var(--danger) 0 calc(50% - 1px), #10221f calc(50% - 1px) calc(50% + 1px), var(--warning) calc(50% + 1px));}
+  .fav{position:absolute; top:6px; right:8px; font-size:18px; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5);}
+  /* cuerpo: nombre, ubicación, alérgenos */
+  .rbody{padding:9px 10px 11px; display:flex; flex-direction:column; gap:5px;}
+  .rname{font-size:13.5px; font-weight:600; color:var(--text); line-height:1.2;}
+  .rloc{font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px;}
+  .achips{display:flex; flex-wrap:wrap; gap:5px; margin-top:1px;}
+  .achip{font-size:10px; font-weight:600; padding:2px 7px; border-radius:999px;}
+  .achip.grave{background:rgba(224,82,79,0.20); color:var(--grave);}
+  .achip.medio{background:rgba(240,168,58,0.20); color:var(--medio);}
+  .achip.leve{background:rgba(143,220,184,0.18); color:var(--leve);}
+  .achip.ok{background:rgba(70,181,110,0.18); color:var(--success);}
+  .achip.more{background:rgba(255,255,255,0.08); color:var(--muted);}
+
+  /* Barra de navegación: Inicio (casa) en vez de Explorar */
+  .nav{display:flex; border-top:1px solid var(--line); flex-shrink:0; padding:8px 4px 14px;}
   .navitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;}
   .navitem i{font-size:24px; color:var(--muted);}
   .navitem span{font-size:10.5px; color:var(--muted);}
+  .navitem.active i, .navitem.active span{color:var(--info); font-weight:600;}
   .navitem .scanbox{width:54px; height:54px; border-radius:50%; background:var(--info); display:flex; align-items:center; justify-content:center; margin-top:-22px; border:4px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.35);}
   .navitem .scanbox i{color:#fff; font-size:26px;}
-  .ok{color:var(--success);} .warn{color:var(--warning);} .dang{color:var(--danger);}
 </style>
 </head>
 <body>
 <div class="phone">
-  <div class="statusbar"><span>9:41</span><span><i class="ti ti-wifi"></i> <i class="ti ti-battery-3"></i></span></div>
 
-  <div class="greet">
-    <div class="hi">Hola, Marc</div>
-    <div class="q">¿Qué vamos a comer hoy?</div>
+  <div class="statusbar">
+    <span>9:41</span>
+    <span><i class="ti ti-wifi"></i> <i class="ti ti-battery-3"></i></span>
   </div>
 
-  <div class="mapwrap">
-    <div class="map">
-      <div class="street" style="top:0; left:38%; width:5px; height:100%;"></div>
-      <div class="street" style="top:45%; left:0; width:100%; height:5px;"></div>
-      <div class="street" style="top:0; left:72%; width:3px; height:100%; opacity:.6;"></div>
-      <div class="me"></div>
-      <div class="pin" style="top:25%; left:55%; background:var(--success);"><i class="ti ti-check"></i></div>
-      <div class="pin" style="top:60%; left:68%; background:var(--success);"><i class="ti ti-check"></i></div>
-      <div class="pin" style="top:68%; left:30%; background:var(--warning);"><i class="ti ti-alert-triangle"></i></div>
-      <div class="legend">
-        <span class="ok"><i class="ti ti-circle-filled"></i> Apto</span>
-        <span class="warn"><i class="ti ti-circle-filled"></i> Precaución</span>
-      </div>
-      <div class="seemap"><i class="ti ti-arrows-maximize"></i> Ver mapa</div>
+  <!-- Cabecera -->
+  <div class="header">
+    <div class="greet">
+      <div class="hi">Hola, Alberto</div>
+      <div class="q">¿Qué vamos a comer hoy?</div>
+    </div>
+    <div class="acts">
+      <i class="ti ti-bell"></i>
+      <i class="ti ti-bookmark"></i>
     </div>
   </div>
 
-  <div class="recent">
-    <div class="head">
-      <span class="t">Vistos recientemente</span>
-      <span class="f">Favoritos <i class="ti ti-heart"></i></span>
-    </div>
-    <div class="row">
-      <div class="thumb"><i class="ti ti-tools-kitchen-2"></i></div>
-      <div style="flex:1;">
-        <div class="name">Can Pinotxo</div>
-        <div class="status ok"><i class="ti ti-circle-check"></i> Sin tus 3 alérgenos</div>
+  <!-- Buscador -->
+  <div class="search"><i class="ti ti-search"></i> Buscar restaurantes, cafeterías…</div>
+
+  <!-- 3 botones -->
+  <div class="seg3">
+    <div class="s3"><i class="ti ti-heart"></i> Favoritos</div>
+    <div class="s3 active"><i class="ti ti-building-store"></i> Locales</div>
+    <div class="s3 explore"><i class="ti ti-map-2"></i> Explorar</div>
+  </div>
+
+  <!-- Filtros por tipo -->
+  <div class="filters">
+    <div class="fchip active">Todo</div>
+    <div class="fchip"><i class="ti ti-coffee"></i> Cafeterías</div>
+    <div class="fchip"><i class="ti ti-bread"></i> Desayuno</div>
+    <div class="fchip"><i class="ti ti-tools-kitchen-2"></i> Comidas</div>
+    <div class="fchip"><i class="ti ti-moon"></i> Cena</div>
+    <div class="fchip"><i class="ti ti-shopping-bag"></i> Para llevar</div>
+    <div class="fchip"><i class="ti ti-ice-cream-2"></i> Postres</div>
+  </div>
+
+  <!-- Rejilla de restaurantes -->
+  <div class="content">
+    <div class="grid">
+
+      <!-- b.3: 2+ graves y 1+ leves → texto prioriza graves; indicativo Peligro mitad rojo/naranja -->
+      <div class="rcard">
+        <div class="photo"><i class="ti ti-tools-kitchen-2"></i>
+          <span class="verdict peligro mix">Peligro</span>
+          <i class="ti ti-heart-filled fav" style="color:var(--danger);"></i>
+        </div>
+        <div class="rbody">
+          <div class="rname">Bella Italia</div>
+          <div class="rloc"><i class="ti ti-map-pin" style="font-size:11px;"></i> Centro · 320 m</div>
+          <div class="achips">
+            <span class="achip grave">Gluten</span>
+            <span class="achip grave">Cacahuetes</span>
+            <span class="achip more">+2</span>
+          </div>
+        </div>
       </div>
-      <i class="ti ti-heart dang" style="font-size:19px;"></i>
-    </div>
-    <div class="row">
-      <div class="thumb"><i class="ti ti-tools-kitchen-2"></i></div>
-      <div style="flex:1;">
-        <div class="name">La Trattoria</div>
-        <div class="status warn"><i class="ti ti-alert-triangle"></i> Contiene gluten</div>
+
+      <!-- b.1: solo leves (más de 2) → muestra 2 + "+" -->
+      <div class="rcard">
+        <div class="photo"><i class="ti ti-coffee"></i>
+          <span class="verdict prec">Precaución</span>
+          <i class="ti ti-heart fav"></i>
+        </div>
+        <div class="rbody">
+          <div class="rname">Café Aroma</div>
+          <div class="rloc"><i class="ti ti-map-pin" style="font-size:11px;"></i> Gràcia · 550 m</div>
+          <div class="achips">
+            <span class="achip leve">Lácteos</span>
+            <span class="achip leve">Sulfitos</span>
+            <span class="achip more">+1</span>
+          </div>
+        </div>
       </div>
-      <i class="ti ti-heart" style="font-size:19px; color:var(--hint);"></i>
+
+      <!-- a: sin alérgenos del usuario → Seguro -->
+      <div class="rcard">
+        <div class="photo"><i class="ti ti-salad"></i>
+          <span class="verdict seguro">Seguro</span>
+          <i class="ti ti-heart fav"></i>
+        </div>
+        <div class="rbody">
+          <div class="rname">Sojita Veggie</div>
+          <div class="rloc"><i class="ti ti-map-pin" style="font-size:11px;"></i> Eixample · 400 m</div>
+          <div class="achips">
+            <span class="achip ok">Sin tus alérgenos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- b.2: solo graves (2) → Peligro rojo -->
+      <div class="rcard">
+        <div class="photo"><i class="ti ti-tools-kitchen-2"></i>
+          <span class="verdict peligro">Peligro</span>
+          <i class="ti ti-heart-filled fav" style="color:var(--danger);"></i>
+        </div>
+        <div class="rbody">
+          <div class="rname">Can Pinotxo</div>
+          <div class="rloc"><i class="ti ti-map-pin" style="font-size:11px;"></i> El Born · 800 m</div>
+          <div class="achips">
+            <span class="achip grave">Cacahuetes</span>
+            <span class="achip grave">Gluten</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
+  <!-- Barra de navegación: Inicio activo -->
   <div class="nav">
-    <div class="navitem"><i class="ti ti-search"></i><span>Explorar</span></div>
+    <div class="navitem active"><i class="ti ti-home"></i><span>Inicio</span></div>
     <div class="navitem"><i class="ti ti-user"></i><span>Perfil</span></div>
     <div class="navitem"><div class="scanbox"><i class="ti ti-scan"></i></div><span>Escanear</span></div>
     <div class="navitem"><i class="ti ti-calendar-month"></i><span>Calendario</span></div>
     <div class="navitem"><i class="ti ti-settings"></i><span>Ajustes</span></div>
   </div>
+
 </div>
 </body>
 </html>

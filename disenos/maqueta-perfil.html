@@ -48,8 +48,8 @@
 
   /* Cuadrícula de alérgenos (más bajos en altura) */
   .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
-  .allergen{display:flex; flex-direction:column; align-items:center; gap:4px; padding:6px 4px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background:var(--surface);}
-  .allergen i{font-size:21px; color:var(--hint);}
+  .allergen{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:5px 4px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background:var(--surface);}
+  .allergen i{font-size:19px; color:var(--hint); line-height:1;}
   .allergen span{font-size:10px; color:var(--muted); text-align:center; line-height:1.3;}
   .allergen.grave{background:var(--grave-bg); border-color:var(--grave-border);}
   .allergen.grave i, .allergen.grave span{color:var(--grave);}
@@ -71,7 +71,7 @@
   .list-info .meta em{font-style:italic;}
   /* badge de gravedad estilo Calendario (pastilla sólida) */
   .tag{font-size:11px; font-weight:600; padding:3px 9px; border-radius:999px; white-space:nowrap;}
-  .tag.grave{background:var(--grave); color:#fff;}
+  .tag.grave{background:var(--grave); color:#10221f;}
   .tag.medio{background:var(--medio); color:#10221f;}
   .tag.leve{background:var(--leve); color:#10221f;}
   /* fila vacía (espacio para el siguiente) */
@@ -110,7 +110,7 @@
   <div class="header">
     <div class="avatar"><i class="ti ti-user"></i></div>
     <div class="header-text">
-      <div class="name">Marc</div>
+      <div class="name">Alberto</div>
       <div class="sub">Mis alérgenos</div>
     </div>
   </div>
@@ -202,7 +202,7 @@
 
   <!-- Barra de navegación: 5 ítems, escaneo al centro -->
   <div class="nav">
-    <div class="navitem"><i class="ti ti-search"></i><span>Explorar</span></div>
+    <div class="navitem"><i class="ti ti-home"></i><span>Inicio</span></div>
     <div class="navitem active"><i class="ti ti-user"></i><span>Perfil</span></div>
     <div class="navitem"><div class="scanbox"><i class="ti ti-scan"></i></div><span>Escanear</span></div>
     <div class="navitem"><i class="ti ti-calendar-month"></i><span>Calendario</span></div>
