@@ -2,7 +2,7 @@
 
 **Última sesión:** 2026-06-06
 **Branch:** main
-**Último commit:** `f525779 feat: pantalla Calendario (rejilla + agenda) y tema oscuro en toda la app`
+**Último commit:** `cd125c0 docs: regenerar capturas centradas y cuadricula de pantallas en el README`
 
 ---
 
