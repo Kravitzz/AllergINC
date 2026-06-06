@@ -1,41 +1,44 @@
 # Especificación de diseño inicial
 
-Fecha: 2026-06-03 (ampliada 2026-06-05)
-Estado: parcial (Inicio, Perfil y Calendario aprobadas y en tema oscuro; Noticias,
-escaneo y mapa pendientes)
+Fecha: 2026-06-03 (ampliada 2026-06-06)
+Estado: Inicio, Explorar (mapa + emergente + ficha), Perfil, Calendario y Noticias
+aprobadas, en tema oscuro. Pendientes: Escaneo (D) y Ajustes.
 
 > **Tema visual:** toda la app va en **tema oscuro** (fondo `#0e0e10`/`#1a1a1c`,
-> acento azul `#4a90d9`). La pantalla de Inicio queda pendiente de un rediseño.
+> acento azul `#4a90d9`). Usuario de ejemplo: Alberto.
+>
+> **Indicativo de compatibilidad** (mapa, listas, fichas): Seguro (verde) ·
+> Precaución (naranja) · Peligro (rojo) · Sin información (gris). La ausencia de
+> dato nunca es "seguro".
 
 ## Propósito
 
 Definir el diseño de la app de alérgenos antes de implementar. Este documento es
 un documento vivo: se amplía a medida que se diseñan más pantallas.
 
-## Pantalla principal (aprobada)
+## Pantalla de Inicio (rediseñada, aprobada)
+
+Estilo descubrimiento (referencia: apps tipo Grab Discover).
+Maqueta: `disenos/maqueta-pantalla-principal.html`.
 
 ### Estructura, de arriba abajo
 
-1. **Saludo personalizado.** "Hola, {nombre} · ¿Qué vamos a comer hoy?".
-2. **Minimapa.** Ubicación del usuario + locales cercanos vistos de un vistazo.
-   - Pines con color según el perfil del usuario:
-     - Verde: el local no contiene ninguno de los alérgenos del usuario.
-     - Ámbar: precaución (contiene alguno o falta información).
-   - Acceso "Ver mapa" → pantalla de mapa grande (Explorar).
-3. **Vistos recientemente / Favoritos.** Lista de locales consultados, con opción
-   de marcar favoritos y aviso rápido de compatibilidad con el perfil.
-4. **Barra inferior de navegación, 4 botones:**
-   - Explorar (lupa) → mapa grande.
-   - Perfil (persona) → alérgenos, intolerancias y recordatorios.
-   - Escanear (centro, resaltado) → cámara para leer cartas y platos.
-   - Ajustes (rueda) → datos, número, privacidad, configuración general.
+1. **Saludo** "Hola, Alberto · ¿Qué vamos a comer hoy?" + buscador.
+2. **Tres accesos:** Favoritos · Locales · **Explorar** (abre el mapa).
+3. **Filtros por tipo:** Cafeterías · Desayuno · Comidas · Cena · Para llevar · Postres.
+4. **Rejilla de tarjetas de local** (2 columnas): foto, nombre, distancia,
+   indicativo de compatibilidad y los alérgenos del usuario presentes.
+5. **Barra inferior de 5 botones:** Inicio · Perfil · Escanear (centro, elevado) ·
+   Calendario · Ajustes.
 
 ### Decisiones de diseño
 
+- Las tarjetas priorizan los alérgenos más graves; si hay más de los que caben,
+  se indica con "+N", que abre el detalle del local.
+- El indicativo "Peligro" combina rojo/naranja (diagonal) cuando el local tiene a
+  la vez alérgenos graves y leves del usuario.
 - El botón de escanear se resalta en el centro por ser la acción del momento
-  crítico (estar frente a una carta). Posición revisable.
-- Icono de "escanear" (no de QR) porque se leen cartas y platos completos, no solo
-  códigos.
+  crítico (estar frente a una carta).
 
 ## Pantalla Perfil (aprobada)
 
@@ -89,12 +92,44 @@ antelación). Dos vistas con un conmutador CALENDARIO / AGENDA arriba a la derec
 - Segmentado DÍA / SEMANA / MES para cambiar el rango y saltar a meses lejanos.
 - Botón `+` flotante para añadir eventos.
 
+## Pantalla Explorar (aprobada)
+
+Subsistema C: descubrir y filtrar locales en un mapa, con datos de alérgenos de
+nuestro repositorio. Se abre desde el acceso "Explorar" de Inicio.
+
+### Vista mapa — `disenos/maqueta-explorar.html`
+- Mapa a pantalla completa con la ubicación del usuario y **pines por
+  compatibilidad** (Seguro / Precaución / Peligro / Sin información).
+- Buscador, filtros por tipo y conmutador **"Aptos para mí"**.
+- "Buscar en esta zona" al mover el mapa y botón de recentrar.
+- **Hoja inferior deslizable** con la lista de locales (veredicto + alérgenos),
+  con la nota "Datos de nuestra base · verifica siempre con el local".
+- Técnico: react-native-maps pintando locales de Cloudflare D1 (no Google Places),
+  para evitar coste por petición y mostrar datos propios de alérgenos.
+
+### Emergente al tocar un pin — `disenos/maqueta-explorar-preview.html`
+Tarjeta flotante (estilo Google Maps): nombre + veredicto, valoración en estrellas,
+tipo y precio medio, estado (abierto/cierra), alérgenos coincidentes y botón
+**"Más detalles"** que abre la ficha. (Valoración: fuente por decidir, propia en
+D1 o Google con atribución y coste.)
+
+### Ficha del local — `disenos/maqueta-ficha-local.html`
+Foto, nombre, valoración, tipo/precio, horario y dirección; **banner de
+compatibilidad** con los alérgenos del usuario presentes y aviso de verificar +
+fecha del dato; "Tus alérgenos en este local" (en qué platos), carta con alérgenos
+por plato, e información. Acciones nativas: **Cómo llegar** (abre Maps), **Llamar**
+(`tel:`) y **Compartir** (hoja del sistema). La barra inferior se mantiene visible.
+
+## Pantalla Noticias (aprobada)
+
+Pestaña gemela de Perfil (`disenos/maqueta-noticias.html`): tablón de cambios en
+cartas de favoritos y novedades, con tarjetas de color según el indicativo y
+filtros Todo / Favoritos / Alertas.
+
 ## Pantallas pendientes de diseñar
 
-- **Inicio:** rediseño pendiente (mejorar la versión actual).
-- **Noticias:** tablón de cambios en cartas y novedades de favoritos (sin concretar).
-- **Escaneo (subsistema D):** flujo de cámara → OCR → comparación con perfil.
-- **Mapa grande (Explorar / subsistema C):** búsqueda y filtrado de locales.
+- **Escaneo (subsistema D):** flujo de cámara → OCR → comparación con el perfil.
+- **Ajustes:** datos de cuenta, privacidad y configuración general.
 
 ## Restricción transversal
 

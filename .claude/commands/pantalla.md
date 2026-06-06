@@ -13,12 +13,15 @@ Antes de empezar:
 2. Lee la maqueta más cercana en `disenos/` para reutilizar patrones.
 
 Patrones fijos (no cambiar sin avisar):
-- Barra inferior de 5 botones: Explorar (lupa) · Perfil (persona) · Escanear
+- Tema oscuro (`#0e0e10`/`#1a1a1c`, acento azul `#4a90d9`). Usuario: Alberto.
+- Barra inferior de 5 botones: Inicio (casa) · Perfil (persona) · Escanear
   (centro, elevado) · Calendario · Ajustes (rueda).
-- Código de color por compatibilidad con el perfil: verde = apto, ámbar =
-  precaución, rojo = contiene alérgeno del usuario.
-- Aviso de seguridad: toda pantalla con veredicto "apto" recuerda verificar con el
-  restaurante. Obligatorio.
+- Indicativo de compatibilidad: Seguro (verde) · Precaución (naranja) · Peligro
+  (rojo) · Sin información (gris). La ausencia de dato NUNCA es "seguro".
+- Gravedad del alérgeno en el perfil: rojo (grave) · naranja (medio) · verde menta
+  (leve) · gris (sin alergia). Es un contexto distinto del indicativo de local.
+- Aviso de seguridad: toda pantalla con veredicto de compatibilidad recuerda
+  verificar con el restaurante. Obligatorio.
 - Interfaz en español, mínimos términos en inglés.
 
 Flujo:

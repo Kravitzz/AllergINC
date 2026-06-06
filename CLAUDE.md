@@ -18,7 +18,7 @@ alimentarias de la presencia de sus alérgenos en menús de restaurantes.
 |---|------------|--------|
 | A | Perfil de usuario: registro de alergias e intolerancias | Diseñado |
 | B | Recordatorios periódicos de medicación/suplementos | Diseñado (en Calendario) |
-| C | Repositorio de menús de restaurantes (filtrados por perfil) | Pendiente |
+| C | Repositorio de menús de restaurantes (filtrados por perfil) | Interfaz diseñada (Explorar); datos pendientes |
 | D | Escaneo de cartas con IA (cámara → OCR → comparar con perfil) | Pendiente |
 
 **Orden de construcción acordado:** primero A + B (autónomos, sin datos externos
@@ -48,17 +48,23 @@ NO están reguladas igual → quedan para fases posteriores.
 ## Diseño decidido hasta ahora
 
 > **Tema oscuro** en toda la app (paleta `#0e0e10`/`#1a1a1c`, acento azul `#4a90d9`).
-> La pantalla de Inicio quedó pendiente de un rediseño más a fondo.
+> Usuario de ejemplo: **Alberto**.
+>
+> **Indicativo de compatibilidad** (mapa, listas, tarjetas y fichas): **Seguro**
+> (verde) · **Precaución** (naranja) · **Peligro** (rojo) · **Sin información**
+> (gris). La ausencia de dato NUNCA es "seguro". (La gravedad de los alérgenos del
+> perfil usa rojo/naranja/verde menta; es un contexto distinto.)
+>
+> **Barra inferior (5 botones):** Inicio · Perfil · Escanear (centro, elevado) ·
+> Calendario · Ajustes.
 
-**Pantalla principal (versión 1, aprobada).** Híbrido de dos referencias:
-- Arriba: saludo "Hola, Marc · ¿Qué vamos a comer hoy?".
-- Centro: minimapa con ubicación del usuario y locales cercanos. Pines con color
-  según perfil (verde = apto, ámbar = precaución). Botón "Ver mapa" → mapa grande.
-- Debajo: lista "Vistos recientemente / Favoritos".
-- Barra inferior (ahora 5 botones): Explorar (lupa) → mapa grande · Perfil
-  (persona) · Escanear (centro, elevado) · Calendario · Ajustes (rueda).
-
-Maqueta: `disenos/maqueta-pantalla-principal.html` (abrir en navegador).
+**Pantalla de Inicio (rediseñada, aprobada).** Estilo descubrimiento. Maqueta:
+`disenos/maqueta-pantalla-principal.html`.
+- Saludo "Hola, Alberto · ¿Qué vamos a comer hoy?" + buscador.
+- Tres accesos: Favoritos · Locales · **Explorar** (abre el mapa).
+- Filtros por tipo: Cafeterías · Desayuno · Comidas · Cena · Para llevar · Postres.
+- Rejilla de tarjetas de local (foto, distancia, indicativo de compatibilidad y
+  los alérgenos del usuario presentes, con "+N" si hay más).
 
 **Pantalla Perfil (aprobada).** Subsistema A. Maqueta: `disenos/maqueta-perfil.html`.
 - Conmutador superior: pestañas "Perfil" / "Noticias" (tablón futuro de cambios
@@ -80,8 +86,21 @@ conmutador CALENDARIO / AGENDA arriba a la derecha:
 - Agenda/línea de tiempo (`disenos/maqueta-calendario-agenda.html`): eventos por
   hora, con segmentado DÍA / SEMANA / MES. Botón `+` flotante.
 
-**Pendiente de diseñar:** Escaneo, mapa grande (Explorar), Noticias, y rediseño de
-la pantalla de Inicio.
+**Pantalla Noticias (aprobada).** Pestaña gemela de Perfil. Maqueta:
+`disenos/maqueta-noticias.html`. Tablón de cambios en cartas de favoritos y
+novedades, con tarjetas de color según el indicativo y filtros Todo/Favoritos/Alertas.
+
+**Pantalla Explorar (aprobada).** Subsistema C, se abre desde "Explorar" en Inicio.
+Maquetas: `maqueta-explorar.html` (mapa), `maqueta-explorar-preview.html`
+(emergente al tocar un pin) y `maqueta-ficha-local.html` (ficha completa).
+- Mapa con react-native-maps pintando NUESTROS locales (Cloudflare D1), no Google
+  Places; pines por compatibilidad y hoja inferior deslizable con la lista.
+- Filtros por tipo + conmutador "Aptos para mí".
+- Emergente (nombre, valoración, tipo/precio, alérgenos, "Más detalles") → ficha
+  completa (compatibilidad, alérgenos por plato, carta, info y acciones nativas:
+  cómo llegar/llamar/compartir).
+
+**Pendiente de diseñar:** Escaneo (D) y Ajustes.
 
 ## Flujo de trabajo
 
@@ -112,9 +131,9 @@ propone commit).
 
 ## Próximo paso al retomar
 
-Aprobadas y en tema oscuro: Inicio, Perfil y Calendario. Pendientes acordados para
-la próxima sesión:
-1. **Rediseñar la pantalla de Inicio** (el usuario quiere mejorarla).
-2. **Concretar la pantalla de Noticias** (pestaña dentro de Perfil; aún sin definir).
+Aprobadas y en tema oscuro: Inicio, Perfil, Calendario, Noticias y Explorar (con
+emergente y ficha de local). Pendientes:
+1. **Pantalla de Escaneo (subsistema D):** cámara → OCR → comparación con el perfil.
+2. **Pantalla de Ajustes.**
 
-Más adelante: Escaneo (D) y mapa grande / Explorar (C).
+Sin resolver (no es diseño): origen real de los datos de menús (C).

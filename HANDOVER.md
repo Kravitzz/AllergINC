@@ -1,80 +1,76 @@
 # HANDOVER — AllergINC
 
-**Última sesión:** 2026-06-05
+**Última sesión:** 2026-06-06
 **Branch:** main
-**Último commit:** `5d3d4f7 docs: actualizar HANDOVER al cierre de sesion (commit README)`
+**Último commit:** `f525779 feat: pantalla Calendario (rejilla + agenda) y tema oscuro en toda la app`
 
 ---
 
 ## Estado del proyecto
-Fase de diseño, en **tema oscuro**. Tres pantallas aprobadas: Inicio, Perfil y
-Calendario (dos vistas). Repositorio publicado en GitHub (`Kravitzz/AllergINC`).
-Sin código de aplicación todavía.
+Fase de diseño, en tema oscuro. Pantallas aprobadas: Inicio (descubrimiento),
+Explorar (mapa + emergente + ficha de local), Perfil, Calendario (rejilla y
+agenda) y Noticias. Repositorio en GitHub (`Kravitzz/AllergINC`). Sin código de app.
 
-## Hecho en la sesión actual (2026-06-05)
-- **Pantalla Calendario** diseñada y aprobada (subsistema B, largo plazo):
-  - Vista rejilla (`disenos/maqueta-calendario.html`): citas con círculo de color
-    por importancia (alta/media/baja), punto verde = evento diario, punto teal =
-    mensual; lista del día + "Próximos"; botón `+` flotante.
-  - Vista agenda (`disenos/maqueta-calendario-agenda.html`): línea de tiempo por
-    horas + segmentado DÍA/SEMANA/MES; botón `+` flotante.
-  - Conmutador CALENDARIO / AGENDA arriba a la derecha.
-- **Tema oscuro** aplicado a Inicio, Perfil y Calendario (paleta común).
-- **Perfil reestructurado:** se quitaron los recordatorios (ahora en Calendario);
-  nueva sección "Alérgenos" (activos de los 14 con su medicamento en cursiva) y
-  "Otros alérgenos" anclada al fondo; gravedad con badge tipo pastilla; "Leve" en
-  verde menta; fichas de la cuadrícula más bajas.
-- **Inicio:** pasado a oscuro y barra ampliada a 5 botones (faltaba Calendario).
-- Capturas PNG de las 4 maquetas en `disenos/capturas/` (generadas con Edge
-  headless; sin iconos por el CDN, se ven al abrir el HTML).
-- Documentación sincronizada: CLAUDE.md, spec, ESTADO-PROYECTO.md y README (con
-  imágenes de las pantallas).
+## Hecho en la sesión actual (2026-06-06)
+- **Noticias** definida (tablón de cambios en favoritos, filtros, tarjetas por color).
+- **Inicio rediseñado** estilo descubrimiento: saludo + buscador, accesos
+  Favoritos/Locales/Explorar, filtros por tipo y rejilla de tarjetas de local.
+- **Explorar** diseñado (subsistema C): mapa con pines por compatibilidad sobre
+  nuestro repositorio, hoja inferior deslizable, emergente al tocar un pin y
+  **ficha completa del local** (compatibilidad, alérgenos por plato, carta, info,
+  acciones nativas cómo llegar/llamar/compartir).
+- **Indicativo de compatibilidad unificado:** Seguro / Precaución / Peligro / Sin
+  información (texto negro). Usuario de ejemplo cambiado a **Alberto**.
+- Barra inferior: primer botón pasa de Explorar a **Inicio** en todas las pantallas.
+- **README profesional** (sin emojis) con público objetivo, alcance, seguridad,
+  pila e imágenes centradas de las 8 pantallas. Capturas en `disenos/capturas/`.
+- Docs sincronizados: CLAUDE.md, spec, ESTADO-PROYECTO.md y patrón de `/pantalla`.
 
 ## Pantallas / módulos en estado
-- Inicio — diseñada (oscuro), pendiente de rediseño/mejora.
-- Perfil (A) — diseñada y aprobada (oscuro).
-- Calendario (B) — diseñada y aprobada (oscuro, 2 vistas).
-- Noticias — pendiente (pestaña en Perfil, sin concretar).
-- Mapa grande / Explorar (C) — pendiente.
+- Inicio — diseñada y aprobada.
+- Explorar (C, interfaz) — diseñada (mapa + emergente + ficha de local).
+- Perfil (A) — diseñada y aprobada.
+- Calendario (B) — diseñada y aprobada (2 vistas).
+- Noticias — diseñada y aprobada.
 - Escaneo con IA (D) — pendiente.
-- Código de la app (React Native) — no iniciado.
+- Ajustes — pendiente.
+- Datos de menús (C) y código de la app (React Native) — no iniciados.
 
 ## Decisiones cerradas (no reabrir)
 - Alcance inicial = 14 alérgenos del Reglamento UE 1169/2011.
 - Construcción por fases: A+B antes que C+D.
 - Pila: React Native + Expo / Cloudflare D1 / IA de escaneo por decidir.
-- Pantalla principal: saludo + minimapa + vistos recientes + barra inferior.
-- Barra inferior = 5 botones: Explorar · Perfil · Escanear (centro) · Calendario
-  · Ajustes.
-- **Tema oscuro en toda la app** (fondo `#0e0e10`/`#1a1a1c`, acento azul `#4a90d9`).
-- Perfil (A): cuadrícula de 14 + propios; lista "Alérgenos" con medicamento;
-  "Otros alérgenos" para los propios (categorizados por cercanía); SIN recordatorios.
-- Gravedad por color: rojo = grave, naranja = medio, verde menta = leve, gris =
-  sin alergia. Badge tipo pastilla.
-- Calendario (B): dos vistas (rejilla + agenda), importancia de citas alta/media/
-  baja, medicación diaria (punto) y mensual; los recordatorios viven aquí.
+- Tema oscuro en toda la app (`#0e0e10`/`#1a1a1c`, acento `#4a90d9`). Usuario: Alberto.
+- Barra inferior = 5 botones: Inicio · Perfil · Escanear (centro) · Calendario · Ajustes.
+- Indicativo de compatibilidad: Seguro (verde) / Precaución (naranja) / Peligro
+  (rojo) / Sin información (gris). Texto negro en los badges.
+- Gravedad del alérgeno en Perfil: rojo (grave) / naranja (medio) / verde menta
+  (leve) / gris (sin alergia). Contexto distinto del indicativo de local.
+- Perfil (A): cuadrícula de 14 + propios; lista "Alérgenos" con medicamento (en
+  cursiva); "Otros alérgenos" para los propios. Sin recordatorios (van en Calendario).
+- Calendario (B): rejilla + agenda; importancia de citas; medicación diaria/mensual.
+- Explorar (C): mapa con react-native-maps pintando NUESTROS locales (no Google
+  Places); pin gris "Sin información" nunca verde. Acciones nativas viables.
 
 ## Riesgos y avisos vivos
-- Fiabilidad de datos = seguridad del usuario. Ausencia de dato nunca es "apto".
-- El **verde** sigue reservado a "apto" en mapa/menús. En Perfil se usó verde menta
-  para "leve" y en Calendario verde para "evento diario": son otras pantallas, pero
-  vigilar que no se confundan con "apto" cuando se diseñe la comparación de menús.
+- Fiabilidad de datos = seguridad del usuario. Ausencia de dato nunca es "seguro".
+- Verde reservado a "Seguro/apto"; en Perfil el verde menta es "leve" (otro contexto).
+- Valoraciones en estrellas: decidir fuente (propia en D1 vs Google con atribución
+  y coste; Google no permite cachear >30 días).
 - Coste de la IA de escaneo (D): estimar antes de diseñar esa función a fondo.
 - Origen de los datos de menús (C): principal cuello de botella, sin resolver.
 
 ## Próximo paso concreto
-**Dos tareas acordadas para la próxima sesión:**
-1. **Rediseñar la pantalla de Inicio** (`/pantalla Inicio`): el usuario quiere
-   mejorarla a fondo.
-2. **Concretar la pantalla de Noticias** (pestaña dentro de Perfil): definir qué
-   muestra y cómo, aún sin diseñar.
+**Diseñar la pantalla de Escaneo (subsistema D) con `/pantalla Escaneo`.**
+1. Flujo cámara → OCR → comparación de ingredientes con el perfil.
+2. Antes de profundizar: estimar proveedor de IA/OCR y su coste por uso.
 
 ## Pendientes
-- [ ] Rediseño de Inicio.
-- [ ] Diseño de Noticias.
+- [ ] Pantalla de Escaneo (D).
+- [ ] Pantalla de Ajustes.
+- [ ] Decidir fuente de valoraciones (propia vs Google).
+- [ ] Maqueta de la ventana de añadir alérgeno propio (campo + selector de cercanía).
 - [ ] Añadir `CLAUDE.md` al Conocimiento del proyecto en la app web de Claude.
-- [ ] Definir la ventana de añadir alérgeno propio (campo texto + selector de
-      cercanía) como maqueta aparte.
 
 ## Comando para reanudar
 /inicio

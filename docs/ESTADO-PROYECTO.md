@@ -1,12 +1,12 @@
 # Estado del proyecto
 
-Última actualización: 2026-06-05
+Última actualización: 2026-06-06
 
 ## Resumen
 
-Fase actual: **diseño (brainstorming)**. Tres pantallas aprobadas (Inicio, Perfil
-y Calendario), todas en **tema oscuro**. Sin código de app ni plan de
-implementación todavía.
+Fase actual: **diseño (brainstorming)**, en **tema oscuro**. Pantallas aprobadas:
+Inicio, Explorar (mapa + emergente + ficha de local), Perfil, Calendario (rejilla
+y agenda) y Noticias. Sin código de app ni plan de implementación todavía.
 
 ## Decisiones tomadas
 
@@ -27,14 +27,19 @@ implementación todavía.
 7. **Pantalla Calendario aprobada** (subsistema B, largo plazo). Dos vistas
    (rejilla mensual + agenda/línea de tiempo) con conmutador CALENDARIO/AGENDA;
    citas con importancia alta/media/baja; medicación diaria (punto) y mensual.
-8. **Tema oscuro adoptado en toda la app.** Inicio quedó pendiente de rediseño.
+8. **Tema oscuro adoptado en toda la app.**
+9. **Inicio rediseñado** (estilo descubrimiento) y **Noticias** definida (tablón).
+10. **Explorar diseñado** (subsistema C): mapa con pines por compatibilidad sobre
+    nuestro repositorio (no Google Places), emergente al tocar un pin y ficha
+    completa del local. Acciones nativas (cómo llegar/llamar/compartir) viables.
+11. **Indicativo de compatibilidad unificado:** Seguro / Precaución / Peligro /
+    Sin información. La ausencia de dato nunca es "seguro".
 
 ## Decisiones pendientes (a resolver al retomar)
 
-- **Rediseño de la pantalla de Inicio.**
-- **Concretar la pantalla Noticias** (pestaña dentro de Perfil; sin definir).
-- Diseño de la pantalla de Escaneo y elección del proveedor de IA + su coste.
-- Diseño del mapa grande (pantalla "Explorar").
+- Diseño de la pantalla de Escaneo (D) y elección del proveedor de IA + su coste.
+- Diseño de la pantalla de Ajustes.
+- Fuente de valoraciones (propia en D1 vs Google con atribución y coste).
 - De dónde salen los datos de menús (C): ¿los introduce el restaurante?, ¿se
   importan de fuentes públicas?, ¿los valida alguien?
 
@@ -55,3 +60,7 @@ implementación todavía.
 - 2026-06-05: Pantalla Calendario diseñada y aprobada (rejilla + agenda). Tema
   oscuro aplicado a Inicio, Perfil y Calendario. Perfil reestructurado (sin
   recordatorios, nuevas secciones "Alérgenos" y "Otros alérgenos" con medicamento).
+- 2026-06-06: Inicio rediseñado (descubrimiento) y Noticias definida. Diseñado
+  Explorar (mapa + emergente + ficha de local). Indicativo de compatibilidad
+  unificado (Seguro/Precaución/Peligro/Sin información). README profesional con
+  imágenes de todas las pantallas.
